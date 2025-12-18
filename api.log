@@ -1,0 +1,1028 @@
+Solicitud recibida para gen01codi: 24217
+Solicitud procesada exitosamente
+Solicitud recibida para gen01codi: 24218
+Solicitud procesada exitosamente
+Solicitud recibida para gen01codi: 24217
+Solicitud procesada exitosamente
+Solicitud recibida para gen01codi: 24217
+Error inesperado: division by zero
+Solicitud recibida para gen01codi: 24217
+GEN01CODI válido: 24217
+Solicitud procesada exitosamente
+Solicitud recibida para gen01codi: 0
+GEN01CODI inválido (<=0): 0
+Error de validación: [ErrorDetail(string='GEN01CODI debe ser un número positivo.', code='invalid')]
+Solicitud recibida para gen01codi: 24217
+GEN01CODI válido: 24217
+Solicitud procesada exitosamente
+Solicitud recibida para gen01codi: 24217
+GEN01CODI válido: 24217
+Solicitud procesada exitosamente
+Solicitud recibida para gen01codi: 24217
+GEN01CODI válido: 24217
+Solicitud procesada exitosamente
+Solicitud recibida para gen01codi: 24217
+GEN01CODI válido: 24217
+Solicitud procesada exitosamente
+Solicitud recibida para gen01codi: 24217
+GEN01CODI válido: 24217
+Solicitud procesada exitosamente
+Solicitud recibida para gen01codi: 24217
+GEN01CODI válido: 24217
+Solicitud procesada exitosamente
+Solicitud recibida para gen01codi: 24217
+GEN01CODI válido: 24217
+Solicitud procesada exitosamente
+Solicitud recibida para gen01codi: 22399
+GEN01CODI válido: 22399
+Solicitud procesada exitosamente
+Solicitud recibida para gen01codi: 22399
+GEN01CODI válido: 22399
+Solicitud procesada exitosamente
+Error inesperado: 'CtVencidaSerializer' object has no attribute 'log_error' | GEN01CODI: 9389
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 108, in debug_sql
+    yield
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 497, in _fix_for_params
+    query = query % args
+TypeError: not enough arguments for format string
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, {'gen01codi': gen01codi})
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 97, in execute
+    with self.debug_sql(sql, params, use_last_executed_query=True):
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 113, in debug_sql
+    sql = self.db.ops.last_executed_query(self.cursor, sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\operations.py", line 301, in last_executed_query
+    statement = statement.replace(':%s' % key, force_str(param, errors='replace'))
+AttributeError: 'NoneType' object has no attribute 'replace'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 17, in get
+    data = serializer.execute_query(gen01codi)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 109, in execute_query
+    self.log_error(e)
+AttributeError: 'CtVencidaSerializer' object has no attribute 'log_error'
+Solicitud recibida para gen01codi: 22399
+GEN01CODI válido: 22399
+Solicitud procesada exitosamente
+Error en consulta: 'NoneType' object has no attribute 'replace'
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 108, in debug_sql
+    yield
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 512, in _fix_for_params
+    query = query % tuple(args)
+TypeError: not enough arguments for format string
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 103, in execute_query
+    cursor.execute(query, [gen01codi])
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 97, in execute
+    with self.debug_sql(sql, params, use_last_executed_query=True):
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 113, in debug_sql
+    sql = self.db.ops.last_executed_query(self.cursor, sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\operations.py", line 298, in last_executed_query
+    statement = statement.replace(':arg%d' % i, force_str(param, errors='replace'))
+AttributeError: 'NoneType' object has no attribute 'replace'
+Error inesperado: 'NoneType' object has no attribute 'replace' | GEN01CODI: 9389
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 108, in debug_sql
+    yield
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 512, in _fix_for_params
+    query = query % tuple(args)
+TypeError: not enough arguments for format string
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 17, in get
+    data = serializer.execute_query(gen01codi)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 103, in execute_query
+    cursor.execute(query, [gen01codi])
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 97, in execute
+    with self.debug_sql(sql, params, use_last_executed_query=True):
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 113, in debug_sql
+    sql = self.db.ops.last_executed_query(self.cursor, sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\operations.py", line 298, in last_executed_query
+    statement = statement.replace(':arg%d' % i, force_str(param, errors='replace'))
+AttributeError: 'NoneType' object has no attribute 'replace'
+Solicitud recibida para gen01codi: 24217
+GEN01CODI válido: 24217
+Solicitud procesada exitosamente
+Solicitud recibida para gen01codi: 22399
+GEN01CODI válido: 22399
+Solicitud procesada exitosamente
+Error al ejecutar la consulta: 'int' object is not iterable
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 508, in _fix_for_params
+    for i, param in enumerate(dict.fromkeys(params))
+TypeError: 'int' object is not iterable
+Error inesperado: 'int' object is not iterable | GEN01CODI: 9389
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 17, in get
+    data = serializer.execute_query(gen01codi)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 127, in execute_query
+    raise e
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 508, in _fix_for_params
+    for i, param in enumerate(dict.fromkeys(params))
+TypeError: 'int' object is not iterable
+Error al ejecutar la consulta: 'int' object is not iterable
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 508, in _fix_for_params
+    for i, param in enumerate(dict.fromkeys(params))
+TypeError: 'int' object is not iterable
+Error inesperado: 'int' object is not iterable | GEN01CODI: 9389
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 17, in get
+    data = serializer.execute_query(gen01codi)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 127, in execute_query
+    raise e
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 508, in _fix_for_params
+    for i, param in enumerate(dict.fromkeys(params))
+TypeError: 'int' object is not iterable
+Error al ejecutar la consulta: 'int' object is not iterable
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 508, in _fix_for_params
+    for i, param in enumerate(dict.fromkeys(params))
+TypeError: 'int' object is not iterable
+Error inesperado: 'int' object is not iterable | GEN01CODI: 9389
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 17, in get
+    data = serializer.execute_query(gen01codi)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 127, in execute_query
+    raise e
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 508, in _fix_for_params
+    for i, param in enumerate(dict.fromkeys(params))
+TypeError: 'int' object is not iterable
+Error al ejecutar la consulta: ORA-00942: table or view does not exist
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 523, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+cx_Oracle.DatabaseError: ORA-00942: table or view does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 523, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+django.db.utils.DatabaseError: ORA-00942: table or view does not exist
+Error inesperado: ORA-00942: table or view does not exist | GEN01CODI: 9389
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 523, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+cx_Oracle.DatabaseError: ORA-00942: table or view does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 17, in get
+    data = serializer.execute_query(gen01codi)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 127, in execute_query
+    raise e
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 523, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+django.db.utils.DatabaseError: ORA-00942: table or view does not exist
+Error al ejecutar la consulta: ORA-00942: table or view does not exist
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 523, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+cx_Oracle.DatabaseError: ORA-00942: table or view does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 523, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+django.db.utils.DatabaseError: ORA-00942: table or view does not exist
+Error inesperado: ORA-00942: table or view does not exist | GEN01CODI: 9389
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 523, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+cx_Oracle.DatabaseError: ORA-00942: table or view does not exist
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 17, in get
+    data = serializer.execute_query(gen01codi)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 127, in execute_query
+    raise e
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 523, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+django.db.utils.DatabaseError: ORA-00942: table or view does not exist
+ResumenImpuestos | GEN01CODI: 9389 | Registros: 0
+ResumenImpuestos | GEN01CODI: 37238 | Registros: 1
+ResumenImpuestos | GEN01CODI: 37238 | Registros: 1
+ResumenImpuestos | GEN01CODI: 37238 | Registros: 1
+ResumenImpuestos | GEN01CODI: 35322 | Registros: 3
+Error al ejecutar la consulta: tuple index out of range
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 114, in execute_query
+    "TOTAL": float(row[10])
+IndexError: tuple index out of range
+Error inesperado: tuple index out of range | GEN01CODI: 35322
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 17, in get
+    data = serializer.execute_query(gen01codi)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 123, in execute_query
+    raise e
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 114, in execute_query
+    "TOTAL": float(row[10])
+IndexError: tuple index out of range
+Error al ejecutar la consulta: tuple index out of range
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 114, in execute_query
+    "TOTAL": float(row[10])
+IndexError: tuple index out of range
+Error inesperado: tuple index out of range | GEN01CODI: 35322
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 17, in get
+    data = serializer.execute_query(gen01codi)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 123, in execute_query
+    raise e
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 114, in execute_query
+    "TOTAL": float(row[10])
+IndexError: tuple index out of range
+ResumenImpuestos | GEN01CODI: 35322 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2024 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2024 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2024 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2024 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2024 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2023 | Registros: 1
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 1
+Error al ejecutar la consulta: ORA-00936: missing expression
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 633, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+cx_Oracle.DatabaseError: ORA-00936: missing expression
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 102, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 633, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+django.db.utils.DatabaseError: ORA-00936: missing expression
+Error inesperado: ORA-00936: missing expression | GEN01CODI: 2024
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 633, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+cx_Oracle.DatabaseError: ORA-00936: missing expression
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 17, in get
+    data = serializer.execute_query(gen01codi)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 124, in execute_query
+    raise e
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 102, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 633, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+django.db.utils.DatabaseError: ORA-00936: missing expression
+Error al ejecutar la consulta: ORA-00936: missing expression
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 633, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+cx_Oracle.DatabaseError: ORA-00936: missing expression
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 102, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 633, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+django.db.utils.DatabaseError: ORA-00936: missing expression
+Error inesperado: ORA-00936: missing expression | GEN01CODI: 2024
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 633, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+cx_Oracle.DatabaseError: ORA-00936: missing expression
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 17, in get
+    data = serializer.execute_query(gen01codi)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 124, in execute_query
+    raise e
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 102, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 633, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+django.db.utils.DatabaseError: ORA-00936: missing expression
+ResumenImpuestos | GEN01CODI: 2024 | Registros: 5650
+ResumenImpuestos | GEN01CODI: 2025 | Registros: 5650
+Error al ejecutar la consulta: ORA-28001: la contraseña ha vencido
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 303, in get_new_connection
+    return Database.connect(
+cx_Oracle.DatabaseError: ORA-28001: la contraseña ha vencido
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 28, in execute_query
+    with connection.cursor() as cursor:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 296, in _cursor
+    self.ensure_connection()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 278, in ensure_connection
+    with self.wrap_database_errors:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 303, in get_new_connection
+    return Database.connect(
+django.db.utils.DatabaseError: ORA-28001: la contraseña ha vencido
+Error inesperado: ORA-28001: la contraseña ha vencido | GEN01CODI: 2024
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 303, in get_new_connection
+    return Database.connect(
+cx_Oracle.DatabaseError: ORA-28001: la contraseña ha vencido
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 17, in get
+    data = serializer.execute_query(gen01codi)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 132, in execute_query
+    raise e
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 28, in execute_query
+    with connection.cursor() as cursor:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 320, in cursor
+    return self._cursor()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 296, in _cursor
+    self.ensure_connection()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 278, in ensure_connection
+    with self.wrap_database_errors:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 279, in ensure_connection
+    self.connect()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\base\base.py", line 256, in connect
+    self.connection = self.get_new_connection(conn_params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\utils\asyncio.py", line 26, in inner
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 303, in get_new_connection
+    return Database.connect(
+django.db.utils.DatabaseError: ORA-28001: la contraseña ha vencido
+ResumenImpuestos | GEN01CODI: 2024 | Registros: 24230
+ResumenImpuestos | GEN01CODI: 2003 | Registros: 24542
+ResumenImpuestos | GEN01CODI: 2002 | Registros: 24538
+ResumenImpuestos | GEN01CODI: 2001 | Registros: 24534
+Error al ejecutar la consulta: 'NoneType' object has no attribute 'replace'
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 108, in debug_sql
+    yield
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 512, in _fix_for_params
+    query = query % tuple(args)
+TypeError: not all arguments converted during string formatting
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 102, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 97, in execute
+    with self.debug_sql(sql, params, use_last_executed_query=True):
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 113, in debug_sql
+    sql = self.db.ops.last_executed_query(self.cursor, sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\operations.py", line 298, in last_executed_query
+    statement = statement.replace(':arg%d' % i, force_str(param, errors='replace'))
+AttributeError: 'NoneType' object has no attribute 'replace'
+Error en CtVencidaSerializerAPIView: 'NoneType' object has no attribute 'replace'
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 108, in debug_sql
+    yield
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 512, in _fix_for_params
+    query = query % tuple(args)
+TypeError: not all arguments converted during string formatting
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 23, in get
+    data = serializer.execute_query(year=year)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 131, in execute_query
+    raise e
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 102, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 97, in execute
+    with self.debug_sql(sql, params, use_last_executed_query=True):
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 113, in debug_sql
+    sql = self.db.ops.last_executed_query(self.cursor, sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\operations.py", line 298, in last_executed_query
+    statement = statement.replace(':arg%d' % i, force_str(param, errors='replace'))
+AttributeError: 'NoneType' object has no attribute 'replace'
+Error al ejecutar la consulta: 'NoneType' object has no attribute 'replace'
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 108, in debug_sql
+    yield
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 512, in _fix_for_params
+    query = query % tuple(args)
+TypeError: not all arguments converted during string formatting
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 97, in execute
+    with self.debug_sql(sql, params, use_last_executed_query=True):
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 113, in debug_sql
+    sql = self.db.ops.last_executed_query(self.cursor, sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\operations.py", line 298, in last_executed_query
+    statement = statement.replace(':arg%d' % i, force_str(param, errors='replace'))
+AttributeError: 'NoneType' object has no attribute 'replace'
+Error en CtVencidaSerializerAPIView: 'NoneType' object has no attribute 'replace'
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 108, in debug_sql
+    yield
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 512, in _fix_for_params
+    query = query % tuple(args)
+TypeError: not all arguments converted during string formatting
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 24, in get
+    raw_data = CtVencidaSerializer.execute_query(year=year)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 133, in execute_query
+    raise e
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 97, in execute
+    with self.debug_sql(sql, params, use_last_executed_query=True):
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 113, in debug_sql
+    sql = self.db.ops.last_executed_query(self.cursor, sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\operations.py", line 298, in last_executed_query
+    statement = statement.replace(':arg%d' % i, force_str(param, errors='replace'))
+AttributeError: 'NoneType' object has no attribute 'replace'
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 108, in debug_sql
+    yield
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 512, in _fix_for_params
+    query = query % tuple(args)
+TypeError: not all arguments converted during string formatting
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\ct_vencida.py", line 24, in get
+    raw_data = CtVencidaSerializer.execute_query(year=year)
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 133, in execute_query
+    raise e
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\serializers\ct_vencida.py", line 104, in execute_query
+    cursor.execute(query, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 97, in execute
+    with self.debug_sql(sql, params, use_last_executed_query=True):
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 113, in debug_sql
+    sql = self.db.ops.last_executed_query(self.cursor, sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\operations.py", line 298, in last_executed_query
+    statement = statement.replace(':arg%d' % i, force_str(param, errors='replace'))
+AttributeError: 'NoneType' object has no attribute 'replace'
+CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
+2025-11-07 16:43:16 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-11-07 16:43:18 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
+2025-11-07 16:49:26 | WARNING | api | CtVencidaImpuestoAPIView - ParÃ¡metro year invÃ¡lido: '-2001' - El aÃ±o debe ser un nÃºmero positivo
+2025-11-07 16:49:43 | WARNING | api | CtVencidaImpuestoAPIView - ParÃ¡metro year invÃ¡lido: '-200a' - invalid literal for int() with base 10: '-200a'
+2025-11-07 16:49:51 | WARNING | api | CtVencidaImpuestoAPIView - ParÃ¡metro year invÃ¡lido: '200a' - invalid literal for int() with base 10: '200a'
+2025-11-10 10:26:28 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-11-10 10:26:32 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
+2025-11-10 10:26:42 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2010
+2025-11-10 10:27:23 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 104
+2025-11-10 11:08:29 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-11-10 11:08:31 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
+2025-11-10 11:08:48 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2010
+2025-11-10 11:09:27 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 104
+2025-11-10 11:34:29 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2024
+2025-11-10 12:10:51 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 340
+2025-11-10 14:10:19 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-11-10 14:10:21 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
+2025-11-10 14:44:52 | INFO | api | CtVencidaPorImpuestoAPIView - Consulta iniciada
+2025-11-10 14:44:52 | INFO | api | CtVencidaPorImpuestoAPIView - Consulta exitosa. Registros: 53
+2025-11-10 14:48:21 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-11-10 14:48:21 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-11-10 14:48:41 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-11-10 14:48:41 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-11-10 15:02:57 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-11-10 15:02:57 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-11-10 16:55:16 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-11-10 16:55:16 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-11-10 16:55:24 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-11-10 16:55:24 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-11-10 16:55:28 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-11-10 16:55:28 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-11-10 16:58:01 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-11-10 16:58:01 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-11-13 15:53:07 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-11-13 15:53:08 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-11-13 16:05:54 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-11-13 16:05:54 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-11-19 16:09:58 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-11-19 16:10:01 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
+2025-11-19 16:10:36 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-19 16:10:39 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 226
+2025-11-24 16:39:00 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-24 16:39:04 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-24 16:43:09 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-24 16:43:11 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 12:13:25 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 12:13:28 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 12:18:36 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 12:18:38 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:00:30 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:00:32 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:00:37 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:00:39 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:00:42 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:00:44 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:00:47 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:00:49 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:01:07 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:01:10 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:01:45 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:01:47 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:01:51 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:01:53 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:01:56 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:01:58 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:13:24 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:13:26 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:13:27 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:13:29 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:21:56 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:21:58 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:29:09 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:29:12 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:33:37 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:33:39 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:33:44 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:33:46 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:33:52 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:33:54 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:33:58 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:34:00 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:35:01 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:35:03 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:35:03 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:35:05 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:38:50 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:38:52 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:41:42 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:41:44 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:44:25 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:44:27 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:44:37 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:44:39 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:45:47 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:45:49 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:45:50 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:45:52 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:45:53 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-25 15:45:55 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-25 15:49:43 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2024
+2025-11-25 15:50:06 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2024
+2025-11-25 16:08:26 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2024
+2025-11-25 16:30:41 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 19183
+2025-11-25 16:30:55 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2024
+2025-11-25 16:31:12 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 19183
+2025-11-25 16:51:36 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 19183
+2025-11-25 17:10:47 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 19183
+2025-11-26 09:03:23 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-26 09:03:26 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-26 09:03:38 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2024
+2025-11-26 09:40:00 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 19182
+2025-11-26 12:25:12 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-11-26 12:25:14 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
+2025-11-26 12:30:41 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-26 12:30:43 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-11-26 14:37:12 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-11-26 14:37:14 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
+2025-11-26 15:55:36 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-11-26 15:55:38 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
+2025-11-26 15:55:54 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-11-26 15:55:56 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
+2025-11-26 15:55:57 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2002
+2025-11-26 15:56:01 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 19
+2025-11-26 15:56:01 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2002
+2025-11-26 15:56:05 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 19
+2025-11-26 15:56:05 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2002
+2025-11-26 15:56:09 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 19
+2025-11-26 15:56:12 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2024
+2025-11-26 16:32:51 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 340
+2025-11-26 16:35:29 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2024
+2025-11-26 16:37:47 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-11-26 16:37:49 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
+2025-11-26 16:38:33 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2024
+2025-11-26 17:15:20 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 340
+2025-11-26 17:18:27 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 340
+2025-11-27 12:17:04 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-11-27 12:17:06 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 225
+2025-12-02 10:32:41 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-12-02 10:32:43 | INFO | api | CtVencidaImpuestoDetalleAPIView - Consulta exitosa. Registros: 285
+2025-12-03 15:00:07 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2025-12-03 15:00:09 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 224
+2025-12-03 15:00:37 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-12-03 15:00:39 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
+2025-12-03 16:00:03 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-12-03 16:00:05 | INFO | api | CtVencidaImpuestoDetalleAPIView - Consulta exitosa. Registros: 285
+2025-12-03 16:02:27 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2025-12-03 16:02:29 | INFO | api | CtVencidaImpuestoDetalleAPIView - Consulta exitosa. Registros: 285
+2025-12-03 16:06:40 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2002
+2025-12-03 16:06:44 | INFO | api | CtVencidaImpuestoDetalleAPIView - Consulta exitosa. Registros: 587
+2025-12-03 16:09:32 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2002
+2025-12-03 16:09:36 | INFO | api | CtVencidaImpuestoDetalleAPIView - Consulta exitosa. Registros: 587
+2025-12-04 16:20:54 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-04 16:20:54 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-04 16:46:15 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-04 16:46:15 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-04 16:46:15 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-04 16:46:15 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-04 16:47:35 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-04 16:47:36 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-04 16:47:36 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-04 16:47:36 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-04 16:47:49 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-04 16:47:49 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-04 16:47:49 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-04 16:47:49 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-04 16:49:01 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-04 16:49:01 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-04 16:49:01 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-04 16:49:01 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-05 11:08:26 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-05 11:08:26 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-05 11:08:26 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-05 11:08:26 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-18 11:04:53 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-18 11:04:53 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-18 11:04:53 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-18 11:04:53 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-18 11:24:08 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-18 11:24:08 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-18 11:24:08 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-18 11:24:08 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-18 11:24:39 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-18 11:24:39 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-18 11:24:39 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-18 11:24:39 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-18 11:29:13 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-18 11:29:13 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-18 11:29:13 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-18 11:29:13 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-18 11:35:57 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-18 11:35:57 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-18 11:35:57 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-18 11:35:58 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-18 11:48:51 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-18 11:48:52 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2025-12-18 11:48:52 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2025-12-18 11:48:52 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
