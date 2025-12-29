@@ -16,13 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from Cabildo_api.consultas.views.ct_vencida import CtVencidaImpuestoAPIView, CtVencidaPorTituloAPIView, CtVencidaSerializerAPIView, CtVencidaPorTituloDetalleAPIView
+from Cabildo_api.consultas.views.ct_vencida import CtVencidaImpuestoAPIView, CtVencidaPorTituloAPIView, CtVencidaSerializerAPIView, CtVencidaPorTituloDetalleAPIView, CtVPorimpuestoSerializerApiView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/ct_vencida/<int:year>/', CtVencidaSerializerAPIView.as_view(), name='ct_vencida_year'),
     path('api/ct_vencida_impuesto/<str:year>/', CtVencidaImpuestoAPIView.as_view(), name='ct_vencida_impuesto'),
     path('api/ct_vencida_titulo/', CtVencidaPorTituloAPIView.as_view(), name='ct_vencida_rubro'),
-    path('api/ct_vencida_titulo_detalle/<str:year>/', CtVencidaPorTituloDetalleAPIView.as_view(), name='ct_vencida_desglosada_detalle')
+    path('api/ct_vencida_titulo_detalle/<str:year>/', CtVencidaPorTituloDetalleAPIView.as_view(), name='ct_vencida_desglosada_detalle'),
+    path('api/ct_vencida_porimpuesto/<str:year>/', CtVPorimpuestoSerializerApiView.as_view(), name='ct_vencida_porimpuesto'),
 ]
 

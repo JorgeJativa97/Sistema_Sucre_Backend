@@ -160,3 +160,15 @@ class CtVencidaPorTituloDetalleSerializer(serializers.Serializer):
         descuento = serializers.DecimalField(max_digits=15, decimal_places=2, source='DESCUENTO')
         iva = serializers.DecimalField(max_digits=15, decimal_places=2, source='IVA')
         total = serializers.DecimalField(max_digits=15, decimal_places=2, source='TOTAL')
+
+class CtVPorimpuesto(serializers.Serializer):
+    COD = serializers.CharField()
+    IMPUESTO = serializers.CharField(allow_null=True)
+    ANIO = serializers.IntegerField()
+    EMISION = serializers.DecimalField(max_digits=30, decimal_places=2)
+    INTERES = serializers.DecimalField(max_digits=30, decimal_places=2)
+    COACTIVA = serializers.DecimalField(max_digits=30, decimal_places=2)
+    RECARGO = serializers.DecimalField(max_digits=30, decimal_places=2)
+    DESCUENTO = serializers.DecimalField(max_digits=30, decimal_places=2)
+    IVA = serializers.DecimalField(max_digits=30, decimal_places=2)
+    TOTAL = serializers.DecimalField(max_digits=30, decimal_places=2)

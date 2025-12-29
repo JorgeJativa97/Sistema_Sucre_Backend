@@ -384,5 +384,180 @@ class CtVencidaPorTituloDetalleAPIView(APIView):
                 {"detail": "Error al ejecutar query", "error": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+class CtVPorimpuestoSerializerApiView(APIView):
+    permission_classes = [HasAPIKey]
 
+    def get(self, request, year=None):
+        try:
+            # Si no viene year en la URL, buscar en query params
+            if year is None:
+                year_param = request.query_params.get('year')
+                if year_param:
+                    year = int(year_param)
+                else:
+                    # Si no se proporciona, usar año actual
+                    from datetime import datetime
+                    year = datetime.now().year
+            
+            # Validar que year sea un entero válido
+            try:
+                year_int = int(year)
+                if year_int <= 0:
+                    raise ValueError("El año debe ser un número positivo")
+            except ValueError as ve:
+                logger.warning(f"CtVPorimpuestoSerializerApiView - Parámetro year inválido: '{year}' - {ve}")
+                return Response(
+                    {"detail": f"Parámetro year inválido: '{year}'", "error": str(ve)},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            # Obtener códigos de impuesto (puede ser uno o varios separados por coma)
+            # Ejemplo: ?codigos=95 o ?codigos=95,140,200
+            codigos_param = request.query_params.get('codigos')
+            
+            # Si no se envía el parámetro codigos, retornar error
+            if not codigos_param or not codigos_param.strip():
+                logger.warning("CtVPorimpuestoSerializerApiView - Parámetro codigos no proporcionado")
+                return Response(
+                    {"detail": "El parámetro 'codigos' es requerido", "error": "Debe proporcionar al menos un código de impuesto. Ejemplo: ?codigos=95 o ?codigos=95,140,200"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            try:
+                # Convertir string a lista de enteros
+                codigos_list = [int(c.strip()) for c in codigos_param.split(',') if c.strip()]
+                if not codigos_list:
+                    raise ValueError("Debe proporcionar al menos un código de impuesto válido")
+            except ValueError as ve:
+                logger.warning(f"CtVPorimpuestoSerializerApiView - Parámetro codigos inválido: '{codigos_param}' - {ve}")
+                return Response(
+                    {"detail": f"Parámetro codigos inválido: '{codigos_param}'", "error": str(ve)},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            logger.info(f"CtVPorimpuestoSerializerApiView - Consulta iniciada para year={year}, codigos={codigos_list}")
+
+            # Construir placeholders dinámicos para la cláusula IN
+            # Ejemplo: :cod0, :cod1, :cod2
+            placeholders = ', '.join([f':cod{i}' for i in range(len(codigos_list))])
+            
+            sql = f"""
+            SELECT 
+                    COD,
+                    IMPUESTO,
+                    ANIO,
+                    SUM(EMISION) EMISION,
+                    SUM(INTERES) INTERES,
+                    SUM(COACTIVA) COACTIVA,
+                    SUM(RECARGO) RECARGO,
+                    SUM(DESCUENTO) DESCUENTO,
+                    SUM(IVA) IVA,
+                    SUM(TOTAL) TOTAL
+                FROM (
+                    SELECT 
+                        a.emi01seri as COD,
+                        b.emi03des as IMPUESTO,
+                        a.emi01anio as ANIO,
+                        emi01vtot AS EMISION,
+                        NVL(CASE WHEN web_interes(emi01codi,emi01fobl,emi01seri,emi01vtot) - F_PAGOABONO(EMI01CODI, 'I') < 0 THEN 0 
+                            ELSE web_interes(emi01codi,emi01fobl,emi01seri,emi01vtot) - F_PAGOABONO(EMI01CODI, 'I') END, 0) AS INTERES,
+                        NVL(web_coactiva(emi01codi,emi01fobl,emi01seri,emi01vtot,emi01nrocoa,emi01fcoa),0) AS COACTIVA,
+                        web_recargo(emi01codi,emi01fobl,emi01seri,emi01vtot,emi01anio) AS RECARGO,
+                        web_descuento(emi01codi,emi01fobl,emi01seri,emi01vtot,emi01anio) AS DESCUENTO,
+                        web_iva(emi01codi, emi01seri) AS IVA,
+                        emi01vtot 
+                            + NVL(CASE WHEN web_interes(emi01codi,emi01fobl,emi01seri,emi01vtot) - F_PAGOABONO(EMI01CODI, 'I') < 0 THEN 0 
+                                ELSE web_interes(emi01codi,emi01fobl,emi01seri,emi01vtot) - F_PAGOABONO(EMI01CODI, 'I') END, 0)
+                            + NVL(web_coactiva(emi01codi,emi01fobl,emi01seri,emi01vtot,emi01nrocoa,emi01fcoa),0)
+                            + web_recargo(emi01codi,emi01fobl,emi01seri,emi01vtot,emi01anio)
+                            - web_descuento(emi01codi,emi01fobl,emi01seri,emi01vtot,emi01anio)
+                            + web_iva(emi01codi, emi01seri) AS TOTAL,
+                        a.gen01codi as CIU,
+                        a.emi01clave,
+                        G.GEN01COM AS NOMBRE,
+                        G.GEN01RUC AS IDENTIFICACION
+                    FROM emi01 a 
+                    LEFT JOIN emi03 b ON b.emi03codi = a.emi01seri
+                    INNER JOIN GEN01 G ON G.GEN01CODI = A.GEN01CODI
+                    WHERE emi01esta = 'E'
+                        AND EMI01ANIO <= :year
+                        AND b.emi03codi IN ({placeholders})
+
+                    UNION ALL
+
+                    SELECT 
+                        a.emi01seri as COD,
+                        b.emi03des as IMPUESTO,
+                        a.emi01anio as ANIO,    
+                        emi01vtot - f_pagoabono(emi01codi, 'E') AS EMISION,
+                        NVL(CASE WHEN web_interesabono(emi01codi,emi01fobl,emi01seri,emi01vtot) - f_pagoabono(emi01codi, 'I') < 0 THEN 0 
+                            ELSE web_interesabono(emi01codi,emi01fobl,emi01seri,emi01vtot) - f_pagoabono(emi01codi, 'I') END, 0) AS INTERES,
+                        NVL(web_coactiva(emi01codi,emi01fobl,EMI01SERI,EMI01VTOT,EMI01NROCOA,EMI01FCOA),0) - f_pagoabono(emi01codi, 'C') AS COACTIVA,
+                        web_recargo(emi01codi,emi01fobl,emi01seri,emi01vtot,emi01anio) - f_pagoabono(emi01codi, 'R') AS RECARGO,
+                        0 AS DESCUENTO,
+                        web_iva(emi01codi, emi01seri) - f_pagoabono(emi01codi, 'V') AS IVA,          
+                        emi01vtot - f_pagoabono(emi01codi, 'E')
+                            + NVL(CASE WHEN web_interesabono(emi01codi,emi01fobl,emi01seri,emi01vtot) - f_pagoabono(emi01codi, 'I') < 0 THEN 0 
+                                ELSE web_interesabono(emi01codi,emi01fobl,emi01seri,emi01vtot) - f_pagoabono(emi01codi, 'I') END, 0)
+                            + NVL(web_coactiva(emi01codi,emi01fobl,EMI01SERI,EMI01VTOT,EMI01NROCOA,EMI01FCOA),0) - f_pagoabono(emi01codi, 'C')
+                            + web_recargo(emi01codi,emi01fobl,emi01seri,emi01vtot,emi01anio) - f_pagoabono(emi01codi, 'R')
+                            + web_iva(emi01codi, emi01seri) - f_pagoabono(emi01codi, 'V') AS TOTAL,
+                        a.gen01codi AS CIU,
+                        a.emi01clave,
+                        G.GEN01COM AS NOMBRE,
+                        G.GEN01RUC AS IDENTIFICACION                    
+                    FROM emi01 a 
+                    LEFT JOIN emi03 b ON b.emi03codi = a.emi01seri
+                    INNER JOIN GEN01 G ON G.GEN01CODI = A.GEN01CODI
+                    WHERE emi01esta = 'A'
+                        AND EMI01ANIO <= :year
+                        AND b.emi03codi IN ({placeholders})
+                )
+                GROUP BY COD, IMPUESTO, ANIO
+                ORDER BY ANIO DESC
+            """
+
+            # Construir diccionario de parámetros
+            params = {'year': year_int}
+            for i, cod in enumerate(codigos_list):
+                params[f'cod{i}'] = cod
+
+            with connection.cursor() as cursor:
+                cursor.execute(sql, params)
+                cols = [c[0] for c in cursor.description]
+                rows = cursor.fetchall()
+
+            # Normalizar Decimals a float
+            result = [
+                {col: (float(val) if isinstance(val, Decimal) else val) for col, val in zip(cols, row)}
+                for row in rows
+            ]
+            
+            logger.info(f"CtVPorimpuestoSerializerApiView - Consulta exitosa. Registros: {len(result)}")
+            
+            return Response(result, status=status.HTTP_200_OK)
+
+        except ValueError as e:
+            logger.warning(f"CtVPorimpuestoSerializerApiView - Parámetro inválido: {e}")
+            return Response(
+                {"detail": "Parámetro inválido", "error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except Exception as e:
+            error_detail = traceback.format_exc()
+            logger.error(
+                f"CtVPorimpuestoSerializerApiView - Error inesperado: {str(e)}\n{error_detail}",
+                exc_info=True,
+                extra={
+                    'year': year,
+                    'method': 'GET',
+                    'path': request.path,
+                    'user': getattr(request.user, 'username', 'anonymous')
+                }
+            )
+            return Response(
+                {"detail": "Error al ejecutar query", "error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+                
 
