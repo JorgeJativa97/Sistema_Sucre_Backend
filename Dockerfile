@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN mkdir -p /opt/oracle && \
     cd /opt/oracle && \
     wget https://download.oracle.com/otn_software/linux/instantclient/2110000/instantclient-basic-linux.x64-21.10.0.0.0dbru.zip && \
-    unzip instantclient-basic-linux.x64-21.10.0.0.0dbru. zip && \
+    unzip instantclient-basic-linux. x64-21.10.0.0.0dbru.zip && \
     rm -f instantclient-basic-linux.x64-21.10.0.0.0dbru.zip
 
 # Configurar variables de entorno para Oracle
@@ -29,15 +29,15 @@ ENV PATH=/opt/oracle/instantclient_21_10:$PATH
 # Copiar requirements e instalar dependencias Python
 COPY requirements.txt . 
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir -r requirements. txt && \
     pip install --no-cache-dir gunicorn
 
 # Copiar el código de la aplicación
-COPY . . 
+COPY .   .
 
 # Crear usuario no-root para seguridad
 RUN useradd -m -u 1000 appuser && \
-    chown -R appuser:appuser /app
+    chown -R appuser: appuser /app
 USER appuser
 
 # Puerto expuesto
