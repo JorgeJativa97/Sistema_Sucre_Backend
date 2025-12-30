@@ -156,7 +156,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'api.log',
+            'filename': os.getenv('LOG_FILE_PATH', BASE_DIR / 'api.log'),
             'formatter': 'verbose',
             'encoding': 'utf-8',
         },
