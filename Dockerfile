@@ -23,7 +23,7 @@ ENV PATH=/opt/oracle/instantclient_21_10:$PATH
 
 COPY requirements.txt .
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir --only-binary cx-Oracle -r requirements.txt && \
     pip install --no-cache-dir gunicorn
 
 COPY . . 
