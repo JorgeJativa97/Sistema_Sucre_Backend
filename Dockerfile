@@ -20,19 +20,29 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # El resto del Dockerfile se mantiene igual...
 RUN mkdir -p /opt/oracle && \
     cd /opt/oracle && \
-    wget --quiet --show-progress --progress=bar:force \
-         --header="Cookie: oraclelicense=accept-securebackup-cookie" \
-         https://download.oracle.com/otn_software/linux/instantclient/2114000/instantclient-basic-linux.x64-21.14.0.0.0dbru.zip && \
-    unzip instantclient-basic-linux.x64-21.14.0.0.0dbru.zip && \
-    rm -f instantclient-basic-linux.x64-21.14.0.0.0dbru.zip
+    wget --header="Cookie: oraclelicense=accept-securebackup-cookie" \
+         https://download.oracle.com/otn_software/linux/instantclient/191000/instantclient-basic-linux.x64-19.10.0.0.0dbru.zip && \
+    unzip instantclient-basic-linux.x64-19.10.0.0.0dbru.zip && \
+    rm -f instantclient-basic-linux.x64-19.10.0.0.0dbru.zip
 
-ENV ORACLE_HOME=/opt/oracle/instantclient_21_14
-ENV LD_LIBRARY_PATH=/opt/oracle/instantclient_21_14:$LD_LIBRARY_PATH
-ENV PATH=/opt/oracle/instantclient_21_14:$PATH
-
+ENV ORACLE_HOME=/opt/oracle/instantclient_19_10
+ENV LD_LIBRARY_PATH=/opt/oracle/instantclient_19_10:$LD_LIBRARY_PATH
+ENV PATH=/opt/oracle/instantclient_19_10:$PATH
 # Configurar enlaces simbólicos
 RUN cd $ORACLE_HOME && \
-    ln -sf libclntsh.so.* libclntsh.so
+    # Busca cualquier archivo libclntsh.so.* y crea el enlace
+    for file in libclntsh.so.*; do \
+        if [ -f "$file" ]; then \
+            ln -sf "$file" libclntsh.so; \
+            echo "Enlazado $file a libclntsh.so"; \
+            break; \
+        fi; \
+    done && \
+    # Verifica que el enlace existe
+    if [ ! -L libclntsh.so ]; then \
+        echo "ERROR: No se pudo crear el enlace"; \
+        exit 1; \
+    fi
 
 COPY requirements.txt .
 RUN pip install --upgrade pip && \
