@@ -6,7 +6,15 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libaio1t64 \
+    # Herramientas de compilación
+    gcc \
+    g++ \
+    python3-dev \
+    # Librerías necesarias
+    libaio1 \
+    # Desarrollo de libaio
+    libaio-dev \
+    # Herramientas existentes
     wget \
     unzip \
     curl \
@@ -23,7 +31,7 @@ ENV PATH=/opt/oracle/instantclient_21_10:$PATH
 
 COPY requirements.txt .
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir --only-binary cx-Oracle -r requirements.txt && \
+    pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir gunicorn
 
 COPY . . 
