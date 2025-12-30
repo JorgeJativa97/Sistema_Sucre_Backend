@@ -11,9 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     g++ \
     python3-dev \
     # Paquetes CORREGIDOS para Debian 12:
-    libaio1t64 \          # En lugar de libaio1
-    libaio-dev \          # Este se mantiene igual
-    libnsl2 \             # En lugar de libnsl (si es necesario)
+    libaio1t64 \
     wget \
     unzip \
     curl \
