@@ -1,10 +1,3 @@
-Copilot said: Veo el problema - hay espacios ocultos
-Veo el problema - hay espacios ocultos en el comando. Vamos a reescribir el Dockerfile completamente sin espacios problemáticos:
-
-bash
-cd /opt/sistema-sucre/backend
-
-cat > Dockerfile << 'EOF'
 FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -28,7 +21,7 @@ RUN mkdir -p /opt/oracle && \
 ENV LD_LIBRARY_PATH=/opt/oracle/instantclient_21_10:$LD_LIBRARY_PATH
 ENV PATH=/opt/oracle/instantclient_21_10:$PATH
 
-COPY requirements. txt .
+COPY requirements.txt .
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir gunicorn
