@@ -51,8 +51,9 @@ RUN pip install --upgrade pip && \
 
 COPY . . 
 
+# CORRECCIÓN: Usuario y grupo juntos sin espacios
 RUN useradd -m -u 1000 appuser && \
-    chown -R appuser: appuser /app
+    chown -R appuser:appuser /app
 USER appuser
 
 EXPOSE 8000
