@@ -188,7 +188,7 @@ LOGGING = {
 # Configuración de seguridad
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,192.168.50.90').split(',')
 
 # API Keys (como lista)
 API_KEYS = os.getenv('API_KEYS', '').split(',')
