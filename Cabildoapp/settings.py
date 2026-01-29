@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-7)@zqmg7hi_06437cdwx)01#o3xq7+h-8gda3j6189*rz8#&h*
 # SECURITY WARNING: don't run with debug turned on in production!+
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -179,7 +179,7 @@ LOGGING = {
         },
         'django.db.backends': {
             'handlers': ['console'],
-            'level': 'WARNING',  # Cambiar a DEBUG para ver queries SQL
+            'level': 'DEBUG',  # Cambiar a DEBUG para ver queries SQL
             'propagate': False,
         },
     },
@@ -201,6 +201,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5174",
     "http://localhost:3000",
     "http://192.168.50.90:3000",
+    "http://192.168.50.90",
+    "http://192.168.2.127",
 ]
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
