@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Redis para Celery
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app-network
+
+  # Backend Django
+  backend:
+    build: .
+    command: gunicorn --bind 0.0.0.0:8000 --timeout 600 --workers 3 Cabildoapp.wsgi:application
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_ENGINE=django.db.backends.oracle
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - media_volume:/app/media
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+  # Celery Worker
+  celery_worker:
+    build: .
+    command: celery -A Cabildoapp worker --loglevel=info --concurrency=2
+    environment:
+      - DB_ENGINE=django.db.backends.oracle
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - media_volume:/app/media
+    depends_on:
+      - redis
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  redis_data:
+  media_volume:

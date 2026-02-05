@@ -1191,3 +1191,14 @@ CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
 2026-01-26 14:35:29 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 221
 2026-01-26 14:36:06 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
 2026-01-26 14:36:08 | INFO | api | CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
+2026-01-29 16:16:12 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2026-01-29 16:16:12 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2026-01-29 16:16:12 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2026-01-29 16:16:13 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2026-01-29 16:16:32 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2025
+2026-01-29 17:05:04 | INFO | api | CtVencidaSerializerAPIView - Consulta exitosa. Registros: 22591
+2026-02-05 14:44:54 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2026-02-05 14:44:54 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2026-02-05 14:44:54 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
+2026-02-05 14:44:55 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
+2026-02-05 14:45:11 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001

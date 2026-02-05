@@ -44,10 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
+    'rest_framework',# Para construir APIs RESTful
     'Cabildo_api',
     'drf_yasg',  # Para autenticación por tokens
-    'corsheaders',
+    'corsheaders', # Para manejo de CORS
+    'django_celery_results',  # Para resultados de Celery
 ]
 
 MIDDLEWARE = [
@@ -216,3 +217,19 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAdminUser'
    ),
 }
+
+
+# Configuración de Celery para tareas asíncronas
+# Configuración de Celery
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'  # Guarda resultados en la BD
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'America/Guayaquil'  # Ajusta a tu zona horaria
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60  # 30 minutos máximo por tarea 
+
+# Configuración para guardar reportes generados
+MEDIA_ROOT = '/app/media'
+MEDIA_URL = '/media/'

@@ -13,3 +13,7 @@ sqlparse==0.5.3
 typing_extensions==4.13.2
 tzdata==2025.2
 uritemplate==4.1.1
+# Nuevas dependencias para jobs asíncronos
+celery==5.3.6
+redis==5.0.1
+django-celery-results==2.5.1

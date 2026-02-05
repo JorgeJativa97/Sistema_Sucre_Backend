@@ -7,6 +7,8 @@ import logging
 import traceback
 from django.db import connection
 from decimal import Decimal
+from celery.result import AsyncResult
+from Cabildo_api.task.tasks import generar_reporte_cartera_vencida
 
 logger = logging.getLogger('api')
 
@@ -21,46 +23,58 @@ class CtVencidaSerializerAPIView(APIView):
                 year_param = request.query_params.get('year', None)
                 if year_param:
                     year = int(year_param)
+                else:
+                    # Si no se proporciona, usar año actual
+                    return Response(
+                        {"error": "El parámetro 'year' es requerido"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
             
             logger.info(f"CtVencidaSerializerAPIView - Consulta iniciada para year={year}")
 
-            # Ejecutar query y obtener datos crudos
-            raw_data = CtVencidaSerializer.execute_query(year=year)
+            # Iniciar tarea asíncrona para generar el reporte
 
-            # Serializar los datos (opcional, para validación y formato)
-            serializer = CtVencidaSerializer(raw_data, many=True)
-            
-            logger.info(f"CtVencidaSerializerAPIView - Consulta exitosa. Registros: {len(serializer.data)}")
+            task = generar_reporte_cartera_vencida.delay(year)
 
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response({
+                'task_id': task.id,
+                'status': 'PENDING',
+                'message': f'Generando reporte para el año {year}. Use el task_id para consultar el estado.'
+            }, status=status.HTTP_202_ACCEPTED)
+
         except ValueError as e:
-            logger.warning(f"CtVencidaSerializerAPIView - Parámetro year inválido: {e}")
             return Response(
-                {
-                    "error": "Parámetro year inválido",
-                    "detail": str(e)
-                },
+                {"error": "Parámetro year inválido", "detail": str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        except Exception as e:
-            error_detail = traceback.format_exc()
-            logger.error(
-                f"CtVencidaSerializerAPIView - Error inesperado: {str(e)}\n{error_detail}",
-                exc_info=True,
-                extra={
-                    'year': year,
-                    'method': 'GET',
-                    'path': request.path,
-                    'user': getattr(request.user, 'username', 'anonymous')
-                }
-            )
-            return Response(
-                {
-                    "error": "Error al procesar la solicitud",
-                    "detail": str(e)
-                },
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+
+class CtVencidaStatusAPIView(APIView):
+    """
+    Consultar el estado de un reporte
+    """
+    permission_classes = [HasAPIKey]
+
+    def get(self, request, task_id):
+        task_result = AsyncResult(task_id)
+        
+        response_data = {
+            'task_id': task_id,
+            'status': task_result.state,
+        }
+        
+        if task_result.state == 'PENDING':
+            response_data['message'] = 'El reporte está en cola...'
+        elif task_result.state == 'PROCESSING':
+            response_data['progress'] = task_result.info.get('progress', 0)
+            response_data['message'] = task_result.info.get('status', 'Procesando...')
+        elif task_result.state == 'SUCCESS':
+            response_data['result'] = task_result.result
+            response_data['message'] = 'Reporte generado exitosamente'
+        elif task_result.state == 'FAILURE':
+            response_data['error'] = str(task_result.info)
+            response_data['message'] = 'Error al generar el reporte'
+        
+        return Response(response_data)
 
 
 class CtVencidaImpuestoAPIView(APIView):

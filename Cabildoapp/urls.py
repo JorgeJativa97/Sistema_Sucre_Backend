@@ -16,11 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from Cabildo_api.consultas.views.ct_vencida import CtVencidaImpuestoAPIView, CtVencidaPorTituloAPIView, CtVencidaSerializerAPIView, CtVencidaPorTituloDetalleAPIView, CtVPorimpuestoSerializerApiView
+from Cabildo_api.consultas.views.ct_vencida import CtVencidaImpuestoAPIView, CtVencidaPorTituloAPIView, CtVencidaSerializerAPIView, CtVencidaPorTituloDetalleAPIView, CtVPorimpuestoSerializerApiView, CtVencidaStatusAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/ct_vencida/<int:year>/', CtVencidaSerializerAPIView.as_view(), name='ct_vencida_year'),
+    # Nuevas rutas para jobs asíncronos
+    path('api/ct_vencida/<int:year>/', CtVencidaSerializerAPIView.as_view(), name='ct_vencida_async'),
+    path('api/ct_vencida/status/<str:task_id>/', CtVencidaStatusAPIView.as_view(), name='ct_vencida_status'),
+    
     path('api/ct_vencida_impuesto/<str:year>/', CtVencidaImpuestoAPIView.as_view(), name='ct_vencida_impuesto'),
     path('api/ct_vencida_titulo/', CtVencidaPorTituloAPIView.as_view(), name='ct_vencida_rubro'),
     path('api/ct_vencida_titulo_detalle/<str:year>/', CtVencidaPorTituloDetalleAPIView.as_view(), name='ct_vencida_desglosada_detalle'),
