@@ -222,7 +222,7 @@ REST_FRAMEWORK = {
 # Configuración de Celery para tareas asíncronas
 # Configuración de Celery
 CELERY_BROKER_URL = 'redis://redis:6379/0'
-CELERY_RESULT_BACKEND = 'django-db'  # Guarda resultados en la BD
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'  # ← USAR REDIS
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
