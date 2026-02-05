@@ -34,6 +34,7 @@ services:
       - backend
     networks:
       - backend-network
+    user: "1000:1000"  # ← AGREGAR ESTA LÍNEA (mismo usuario que en Dockerfile)
 
 networks:
   backend-network:

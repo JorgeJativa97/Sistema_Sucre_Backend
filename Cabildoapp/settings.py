@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'Cabildo_api',
     'drf_yasg',  # Para autenticación por tokens
     'corsheaders', # Para manejo de CORS
-    'django_celery_results',  # Para resultados de Celery
+    #'django_celery_results',  # Para resultados de Celery
 ]
 
 MIDDLEWARE = [
