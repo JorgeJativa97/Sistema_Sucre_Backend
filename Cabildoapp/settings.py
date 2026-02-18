@@ -189,7 +189,11 @@ LOGGING = {
 # Configuración de seguridad
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,192.168.50.90').split(',')
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '192.168.50.90',
+]
 
 # API Keys (como lista)
 API_KEYS = os.getenv('API_KEYS', '').split(',')
@@ -204,6 +208,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://192.168.50.90:3000",
     "http://192.168.50.90",
     "http://192.168.2.127",
+    '*',
 ]
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
