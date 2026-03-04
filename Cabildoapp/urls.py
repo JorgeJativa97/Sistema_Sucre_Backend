@@ -1,32 +1,23 @@
-"""
-URL configuration for Cabildoapp project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
-from Cabildo_api.consultas.views.ct_vencida import CtVencidaImpuestoAPIView, CtVencidaPorTituloAPIView, CtVencidaSerializerAPIView, CtVencidaPorTituloDetalleAPIView, CtVPorimpuestoSerializerApiView, CtVencidaStatusAPIView
+from Cabildo_api.consultas.views.ct_vencida import (
+    CtVencidaSerializerAPIView,
+    CtVencidaStatusAPIView,
+    CtVencidaImpuestoAPIView,
+    CtVencidaPorTituloAPIView,
+    CtVencidaPorTituloDetalleAPIView,
+    CtVPorimpuestoSerializerApiView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Nuevas rutas para jobs asíncronos
+    # Reporte completo asíncrono (Celery)
     path('api/ct_vencida/<int:year>/', CtVencidaSerializerAPIView.as_view(), name='ct_vencida_async'),
     path('api/ct_vencida/status/<str:task_id>/', CtVencidaStatusAPIView.as_view(), name='ct_vencida_status'),
-    
-    path('api/ct_vencida_impuesto/<str:year>/', CtVencidaImpuestoAPIView.as_view(), name='ct_vencida_impuesto'),
+    # Consultas síncronas
+    path('api/ct_vencida_impuesto/<int:year>/', CtVencidaImpuestoAPIView.as_view(), name='ct_vencida_impuesto'),
     path('api/ct_vencida_titulo/', CtVencidaPorTituloAPIView.as_view(), name='ct_vencida_rubro'),
-    path('api/ct_vencida_titulo_detalle/<str:year>/', CtVencidaPorTituloDetalleAPIView.as_view(), name='ct_vencida_desglosada_detalle'),
-    path('api/ct_vencida_porimpuesto/<str:year>/', CtVPorimpuestoSerializerApiView.as_view(), name='ct_vencida_porimpuesto'),
+    path('api/ct_vencida_titulo_detalle/<int:year>/', CtVencidaPorTituloDetalleAPIView.as_view(), name='ct_vencida_desglosada_detalle'),
+    path('api/ct_vencida_porimpuesto/<int:year>/', CtVPorimpuestoSerializerApiView.as_view(), name='ct_vencida_porimpuesto'),
 ]
 

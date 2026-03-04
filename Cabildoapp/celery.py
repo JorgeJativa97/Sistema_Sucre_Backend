@@ -1,15 +1,14 @@
 import os
 from celery import Celery
 
-#configurar la variable de entorno para Django
+# Apunta a la configuración de Django para que Celery use los mismos settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Cabildoapp.settings')
 
-#crear la instancia de Celery
+# Instancia principal de Celery para el proyecto
 app = Celery('Cabildoapp')
-app.config_from_object('django.conf:settings', namespace='CELERY')
-app.autodiscover_tasks()
 
-# Definir una tarea de ejemplo
-@app.task(bind=True)
-def debug_task(self):
-    print(f'Request: {self.request!r}')
+# Lee toda la configuración con prefijo CELERY_ desde settings.py
+app.config_from_object('django.conf:settings', namespace='CELERY')
+
+# Descubre automáticamente tareas en los archivos task/tasks.py de cada app
+app.autodiscover_tasks()

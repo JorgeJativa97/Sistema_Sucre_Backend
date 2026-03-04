@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget unzip curl \
     && rm -rf /var/lib/apt/lists/*
 
-# ?? Oracle espera libaio.so.1 (no t64)
+# Oracle espera libaio.so.1 (no t64)
 RUN ln -s /usr/lib/x86_64-linux-gnu/libaio.so.1t64 \
           /usr/lib/x86_64-linux-gnu/libaio.so.1
 
@@ -30,11 +30,12 @@ ENV PATH=/opt/oracle/instantclient_19_10:$PATH
 RUN cd /opt/oracle/instantclient_19_10 && \
     ln -sf libclntsh.so.19.1 libclntsh.so
 
-# Python deps
+# Python deps - Instalar con --no-build-isolation
 COPY requirements.txt .
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir gunicorn
+    pip install setuptools==65.5.1 wheel && \
+    pip install --no-cache-dir --no-build-isolation cx-Oracle==8.3.0 && \
+    pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 

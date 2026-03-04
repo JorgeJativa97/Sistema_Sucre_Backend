@@ -1,2 +1,13 @@
-# Ignorar archivos de entorno
+# Variables de entorno
 .env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+*.log
+
+# Archivos generados (reportes, uploads)
+media/

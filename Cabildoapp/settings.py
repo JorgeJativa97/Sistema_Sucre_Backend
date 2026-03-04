@@ -26,13 +26,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7)@zqmg7hi_06437cdwx)01#o3xq7+h-8gda3j6189*rz8#&h*'
-
-# SECURITY WARNING: don't run with debug turned on in production!+
-DEBUG = True
-
-ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -121,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Guayaquil'
 
 USE_I18N = True
 
@@ -180,7 +173,7 @@ LOGGING = {
         },
         'django.db.backends': {
             'handlers': ['console'],
-            'level': 'DEBUG',  # Cambiar a DEBUG para ver queries SQL
+            'level': 'WARNING',  # Cambiar a DEBUG solo en desarrollo para ver queries SQL
             'propagate': False,
         },
     },
@@ -208,7 +201,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://192.168.50.90:3000",
     "http://192.168.50.90",
     "http://192.168.2.127",
-    '*',
 ]
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
@@ -224,16 +216,15 @@ REST_FRAMEWORK = {
 }
 
 
-# Configuración de Celery para tareas asíncronas
 # Configuración de Celery
 CELERY_BROKER_URL = 'redis://redis:6379/0'
-CELERY_RESULT_BACKEND = 'redis://redis:6379/0'  # ← USAR REDIS
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'America/Guayaquil'  # Ajusta a tu zona horaria
+CELERY_TIMEZONE = 'America/Guayaquil'
 CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60  # 30 minutos máximo por tarea 
+CELERY_TASK_TIME_LIMIT = 3600  # 1 hora máximo por tarea
 
 # Configuración para guardar reportes generados
 MEDIA_ROOT = '/app/media'

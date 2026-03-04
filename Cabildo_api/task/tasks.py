@@ -46,7 +46,8 @@ def generar_reporte_cartera_vencida(self, year):
             'year': year,
             'records': len(data),
             'file': f'/media/reportes/{filename}',
-            'data': data  # Devolver los datos también
+            # No se retorna 'data' para no saturar Redis con miles de registros.
+            # El reporte completo está disponible en el archivo JSON guardado.
         }
         
     except Exception as e:
