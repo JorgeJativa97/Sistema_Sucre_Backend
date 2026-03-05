@@ -85,6 +85,10 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
+        # CONN_MAX_AGE=0: Celery worker abre y cierra conexión por tarea.
+        # Evita que Oracle cierre una conexión "vieja" durante una tarea larga,
+        # lo que causaría errores silenciosos en tareas de 40+ minutos.
+        'CONN_MAX_AGE': 0,
     }
 }
 

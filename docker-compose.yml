@@ -6,6 +6,7 @@ services:
     # Sin ports: Redis solo es accesible dentro de backend-network
     networks:
       - backend-network
+    restart: unless-stopped
 
   backend:
     build: .
@@ -20,6 +21,14 @@ services:
       - redis
     networks:
       - backend-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/ct_vencida_titulo/",
+             "-H", "X-API-Key: ${API_KEYS}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
 
   celery_worker:
     build: .
@@ -34,6 +43,14 @@ services:
     networks:
       - backend-network
     user: "1000:1000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "celery", "-A", "Cabildoapp", "inspect", "ping", "-d",
+             "celery@$$HOSTNAME"]
+      interval: 60s
+      timeout: 15s
+      retries: 3
+      start_period: 30s
 
   flower:
     build: .
