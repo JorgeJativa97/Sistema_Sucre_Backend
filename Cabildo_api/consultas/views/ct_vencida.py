@@ -1,11 +1,14 @@
 from datetime import datetime
 from decimal import Decimal
 import traceback
+import json
+import os
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.db import connection
+from django.conf import settings
 from celery.result import AsyncResult
 
 from Cabildo_api.consultas.serializers.ct_vencida import CtVencidaSerializer
@@ -351,28 +354,34 @@ class CtVencidaStatusAPIView(BaseCarteraAPIView):
     """
 
     def get(self, request, task_id):
-        # AsyncResult permite consultar el estado de una tarea Celery por su ID
-        task_result = AsyncResult(task_id)
+        try:
+            # AsyncResult permite consultar el estado de una tarea Celery por su ID.
+            # Puede lanzar redis.exceptions.ConnectionError si Redis no está disponible.
+            task_result = AsyncResult(task_id)
+            state = task_result.state
 
-        response_data = {
-            'task_id': task_id,
-            'status': task_result.state,
-        }
+            response_data = {
+                'task_id': task_id,
+                'status': state,
+            }
 
-        if task_result.state == 'PENDING':
-            response_data['message'] = 'El reporte está en cola...'
-        elif task_result.state == 'PROCESSING':
-            # task_result.info contiene el dict enviado en update_state()
-            response_data['progress'] = task_result.info.get('progress', 0)
-            response_data['message'] = task_result.info.get('status', 'Procesando...')
-        elif task_result.state == 'SUCCESS':
-            response_data['result'] = task_result.result
-            response_data['message'] = 'Reporte generado exitosamente'
-        elif task_result.state == 'FAILURE':
-            response_data['error'] = str(task_result.info)
-            response_data['message'] = 'Error al generar el reporte'
+            if state == 'PENDING':
+                response_data['message'] = 'El reporte está en cola...'
+            elif state == 'PROCESSING':
+                # task_result.info puede ser None si update_state aún no fue llamado
+                info = task_result.info or {}
+                response_data['progress'] = info.get('progress', 0)
+                response_data['message'] = info.get('status', 'Procesando...')
+            elif state == 'SUCCESS':
+                response_data['result'] = task_result.result
+                response_data['message'] = 'Reporte generado exitosamente'
+            elif state == 'FAILURE':
+                response_data['error'] = str(task_result.info)
+                response_data['message'] = 'Error al generar el reporte'
 
-        return Response(response_data)
+            return Response(response_data)
+        except Exception as e:
+            return self._handle_error(e, 'CtVencidaStatusAPIView', request, task_id=task_id)
 
 
 class CtVencidaImpuestoAPIView(BaseCarteraAPIView):
@@ -504,3 +513,36 @@ class CtVPorimpuestoSerializerApiView(BaseCarteraAPIView):
             )
         except Exception as e:
             return self._handle_error(e, 'CtVPorimpuestoSerializerApiView', request, year=year)
+
+
+class CtVencidaDatosAPIView(BaseCarteraAPIView):
+    """
+    Endpoint: GET /api/ct_vencida/datos/<year>/
+    Retorna el contenido del reporte JSON generado por la tarea Celery.
+    Se llama después de que el status es SUCCESS para obtener los datos completos.
+    El archivo fue guardado en MEDIA_ROOT/reportes/cartera_vencida_<year>.json
+    por la tarea generar_reporte_cartera_vencida.
+    """
+
+    def get(self, request, year):
+        try:
+            year = self._get_year(request, year)
+            filepath = os.path.join(settings.MEDIA_ROOT, 'reportes', f'cartera_vencida_{year}.json')
+
+            if not os.path.exists(filepath):
+                logger.warning(f"CtVencidaDatosAPIView - Archivo no encontrado: {filepath}")
+                return Response(
+                    {"detail": f"No se encontró el reporte para el año {year}. Genérelo primero."},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            with open(filepath, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            logger.info(f"CtVencidaDatosAPIView - Archivo servido: {filepath} ({len(data)} registros)")
+            return Response(data, status=status.HTTP_200_OK)
+
+        except ValueError as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return self._handle_error(e, 'CtVencidaDatosAPIView', request, year=year)
