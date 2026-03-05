@@ -129,20 +129,28 @@ class CtVencidaSerializer(serializers.Serializer):
                     except Exception:
                         return 0.0
 
+                # fetchmany en lugar de fetchall: procesa en lotes de 500 registros
+                # para evitar bloquear la conexión Oracle en una sola llamada larga
+                # y liberar memoria gradualmente.
                 results = []
-                for row in cursor.fetchall():
-                    results.append({
-                        "CEDULA": row[0],
-                        "NOMBRE": row[1],
-                        "CIU": int(row[2]) if row[2] is not None else None,
-                        "EMISION": safe_float(row[3]),
-                        "INTERES": safe_float(row[4]),
-                        "COACTIVA": safe_float(row[5]),
-                        "RECARGO": safe_float(row[6]),
-                        "DESCUENTO": safe_float(row[7]),
-                        "IVA": safe_float(row[8]),
-                        "TOTAL": safe_float(row[9])
-                    })
+                batch_size = 500
+                while True:
+                    batch = cursor.fetchmany(batch_size)
+                    if not batch:
+                        break
+                    for row in batch:
+                        results.append({
+                            "CEDULA": row[0],
+                            "NOMBRE": row[1],
+                            "CIU": int(row[2]) if row[2] is not None else None,
+                            "EMISION": safe_float(row[3]),
+                            "INTERES": safe_float(row[4]),
+                            "COACTIVA": safe_float(row[5]),
+                            "RECARGO": safe_float(row[6]),
+                            "DESCUENTO": safe_float(row[7]),
+                            "IVA": safe_float(row[8]),
+                            "TOTAL": safe_float(row[9])
+                        })
                 return results
         except Exception as e:
             logger.error(

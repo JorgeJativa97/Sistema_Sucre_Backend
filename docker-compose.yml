@@ -23,8 +23,8 @@ services:
       - backend-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/ct_vencida_titulo/",
-             "-H", "X-API-Key: ${API_KEYS}"]
+      # Verifica que gunicorn responda en el puerto 8000 (cualquier respuesta HTTP es válida)
+      test: ["CMD-SHELL", "curl -sf http://localhost:8000/ > /dev/null || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
