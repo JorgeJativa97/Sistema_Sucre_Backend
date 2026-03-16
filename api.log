@@ -1202,3 +1202,9 @@ CtVencidaImpuestoAPIView - Consulta exitosa. Registros: 8
 2026-02-05 14:44:54 | INFO | api | CtVencidaPorTituloAPIView - Consulta iniciada
 2026-02-05 14:44:55 | INFO | api | CtVencidaPorTituloAPIView - Consulta exitosa. Registros: 53
 2026-02-05 14:45:11 | INFO | api | CtVencidaSerializerAPIView - Consulta iniciada para year=2001
+2026-03-13 11:44:44 | INFO | api | BienesInmueblesAPIView - Consulta iniciada
+2026-03-13 11:44:46 | INFO | api | BienesInmueblesAPIView - Consulta exitosa. Registros: 33204
+2026-03-13 12:45:51 | INFO | api | BienesInmueblesAPIView - Consulta iniciada
+2026-03-13 12:45:53 | INFO | api | BienesInmueblesAPIView - Consulta exitosa. Registros: 33204
+2026-03-13 13:03:23 | INFO | api | BienesInmueblesAPIView - Consulta iniciada
+2026-03-13 13:03:24 | INFO | api | BienesInmueblesAPIView - Consulta exitosa. Registros: 33204

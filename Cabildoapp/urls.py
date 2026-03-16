@@ -9,6 +9,7 @@ from Cabildo_api.consultas.views.ct_vencida import (
     CtVencidaPorTituloDetalleAPIView,
     CtVPorimpuestoSerializerApiView,
 )
+from Cabildo_api.consultas.views.bienes_inmuebles import BienesInmueblesAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -21,5 +22,7 @@ urlpatterns = [
     path('api/ct_vencida_titulo/', CtVencidaPorTituloAPIView.as_view(), name='ct_vencida_rubro'),
     path('api/ct_vencida_titulo_detalle/<int:year>/', CtVencidaPorTituloDetalleAPIView.as_view(), name='ct_vencida_desglosada_detalle'),
     path('api/ct_vencida_porimpuesto/<int:year>/', CtVPorimpuestoSerializerApiView.as_view(), name='ct_vencida_porimpuesto'),
+    # Anexo GAD - Bienes Inmuebles
+    path('api/bienes_inmuebles/', BienesInmueblesAPIView.as_view(), name='bienes_inmuebles'),
 ]
 
