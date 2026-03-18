@@ -8,6 +8,7 @@ __pycache__/
 
 # Logs
 *.log
+api.log
 
 # Archivos generados (reportes, uploads)
 media/

@@ -264,3 +264,124 @@ class Emi03(models.Model):
     class Meta:
         managed = False
         db_table = 'EMI03'
+
+
+class Rc08(models.Model):
+      rc08cod = models.BigIntegerField(primary_key=True)
+      rc11codigo = models.CharField(max_length=30)
+      rc08emi01codi = models.BigIntegerField()
+      rc08emi01seri = models.IntegerField(blank=True, null=True)
+      rc08emi01clave = models.CharField(max_length=30, blank=True, null=True)
+      rc08emi01anio = models.IntegerField(blank=True, null=True)
+      rc08emi01mes = models.IntegerField(blank=True, null=True)
+      rc08emi01dia = models.IntegerField(blank=True, null=True)
+      rc08emi01fobl = models.DateField(blank=True, null=True)
+      rc08emi01femi = models.DateField(blank=True, null=True)
+      rc08emi01fpag = models.DateField(blank=True, null=True)
+      rc08emi01npag = models.CharField(max_length=30, blank=True, null=True)
+      rc08emi01vtot = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      rc08emi01inte = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      rc08emi01desc = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      rc08emi01reca = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      rc08emi01esta = models.CharField(max_length=2, blank=True, null=True)
+      rc08emi01titu = models.CharField(max_length=600, blank=True, null=True)
+      rc08gen01codi = models.IntegerField(blank=True, null=True)
+      fpd01_fpd01codi = models.IntegerField(blank=True, null=True)
+      fpd01_fpd01nroabonos = models.IntegerField(blank=True, null=True)
+      fpd01_emi01codi = models.BigIntegerField(blank=True, null=True)
+      fpd01_monto = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01_interes = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01_descuentos = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01_recargos = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01_coactiva = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01_valor_total = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01_capital = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+
+      class Meta:
+          managed = False
+          db_table = 'RC08'
+
+class Fpd01(models.Model):
+      fpd01codi = models.BigIntegerField()
+      fpd01nroabonos = models.IntegerField()
+      fpm01codi = models.BigIntegerField(blank=True, null=True)
+      emi03codi = models.IntegerField()
+      emi01codi = models.BigIntegerField()
+      fpd01estado = models.CharField(max_length=2)
+      fpd01valortotalabono = models.DecimalField(max_digits=18, decimal_places=2)
+      fpd01fobligacion = models.DateField()
+      fpd01fingreso = models.DateField(blank=True, null=True)
+      fpd01felimina = models.DateField(blank=True, null=True)
+      fpd01lingreso = models.CharField(max_length=12, blank=True, null=True)
+      fpd01lelimina = models.CharField(max_length=12, blank=True, null=True)
+      fpd01fpago = models.DateField(blank=True, null=True)
+      fpd01lpago = models.CharField(max_length=12, blank=True, null=True)
+      fpd01npago = models.CharField(max_length=30, blank=True, null=True)
+      fpd01interes = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01descue = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01recar = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01multas = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      gen01codi = models.IntegerField(blank=True, null=True)
+      fpd01avaluo = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01clave = models.CharField(max_length=30, blank=True, null=True)
+      fpd01titu = models.CharField(max_length=2500, blank=True, null=True)
+      fpd01bimpo = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01mora = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01coa = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01anio = models.IntegerField(blank=True, null=True)
+      fpd01capital = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpd01iva = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+
+      class Meta:
+          managed = False
+          db_table = 'FPD01'
+          unique_together = (('fpd01codi', 'fpd01nroabonos'),)
+
+class Fpd02(models.Model):
+      fpd02codi = models.BigIntegerField(primary_key=True)
+      emi04codi = models.IntegerField()
+      fpd01codi = models.BigIntegerField()
+      fpd01nroabonos = models.IntegerField()
+      fpd02devalor = models.DecimalField(max_digits=18, decimal_places=2)
+      fpd02valorabo = models.DecimalField(max_digits=18, decimal_places=2)
+      fpd02valorsobra = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      emi01codi = models.BigIntegerField()
+      fpm01codi = models.BigIntegerField(blank=True, null=True)
+      emi03codi = models.IntegerField(blank=True, null=True)
+
+      class Meta:
+          managed = False
+          db_table = 'FPD02'
+
+class Fpm01(models.Model):
+      fpm01codi = models.BigIntegerField(primary_key=True)
+      emi03codi = models.IntegerField()
+      emi01codi = models.BigIntegerField()
+      fpm01fregi = models.DateField()
+      fpm01fauto = models.DateField(blank=True, null=True)
+      fpm01fbaja = models.DateField(blank=True, null=True)
+      fpm01lreg = models.CharField(max_length=12, blank=True, null=True)
+      fpm01lauto = models.CharField(max_length=12, blank=True, null=True)
+      fpm01lbaja = models.CharField(max_length=12, blank=True, null=True)
+      fpm01esta = models.CharField(max_length=2, blank=True, null=True)
+      fpm01reso = models.CharField(max_length=2500, blank=True, null=True)
+      fpm01forma = models.CharField(max_length=2, blank=True, null=True)
+      fpm01nrocuo = models.IntegerField(blank=True, null=True)
+      fpm01porce = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpm01valortotal = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpm01valorabonado = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpm01valorefectivo = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpm01interliquida = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpm01fechaliquida = models.DateField(blank=True, null=True)
+      fpm01valorcoactiva = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpm01recargos = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpm01iva = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpm01intefecha = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpm01fecinicio = models.DateField(blank=True, null=True)
+      fpm01intperio = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+      fpm01fecliqui = models.DateField(blank=True, null=True)
+      fpm01porliqui = models.DecimalField(max_digits=18, decimal_places=2, blank=True, null=True)
+
+      class Meta:
+          managed = False
+          db_table = 'FPM01'

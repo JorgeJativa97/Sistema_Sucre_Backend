@@ -10,6 +10,7 @@ from Cabildo_api.consultas.views.ct_vencida import (
     CtVPorimpuestoSerializerApiView,
 )
 from Cabildo_api.consultas.views.bienes_inmuebles import BienesInmueblesAPIView
+from Cabildo_api.consultas.views.comprobante import ComprobanteAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +25,8 @@ urlpatterns = [
     path('api/ct_vencida_porimpuesto/<int:year>/', CtVPorimpuestoSerializerApiView.as_view(), name='ct_vencida_porimpuesto'),
     # Anexo GAD - Bienes Inmuebles
     path('api/bienes_inmuebles/', BienesInmueblesAPIView.as_view(), name='bienes_inmuebles'),
+     # Comprobante de pago
+    path('api/comprobante/<int:emi01codi>/', ComprobanteAPIView.as_view(), name='comprobante'),
+    path('api/comprobante/<int:emi01codi>/<int:nro_abono>/', ComprobanteAPIView.as_view(), name='comprobante_abono'),
 ]
 

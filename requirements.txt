@@ -18,3 +18,7 @@ gunicorn==21.2.0
 celery==5.3.6
 redis==5.0.1
 flower==2.0.1
+# Dependencias para generación de PDF
+ reportlab==4.4.10
+#marca de agua para pdf
+pillow==12.1.1
