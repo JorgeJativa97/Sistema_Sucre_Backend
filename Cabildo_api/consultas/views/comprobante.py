@@ -338,12 +338,12 @@ def generar_pdf(titulo, rubros, abono, detalle_abono, cajero=None):
         total     = capital + interes - descuento + recargo + iva
 
     filas_totales = [
-        [Paragraph('<b>Subtotal:</b>', estilos_totales_label), Paragraph(f"*** {capital:.2f}",             estilo_totales)],
-        [Paragraph('Desc:',           estilos_totales_label), Paragraph(f"*** {descuento:.2f}",               estilo_totales)],
-        [Paragraph('Total:',          estilos_totales_label), Paragraph(f"*** {(capital - descuento):.2f}",   estilo_totales)],
-        [Paragraph('Interes:',        estilos_totales_label), Paragraph(f"*** {interes:.2f}",                 estilo_totales)],
-        [Paragraph('Iva:',            estilos_totales_label), Paragraph(f"*** {iva:.2f}",                     estilo_totales)],
-        [Paragraph('',   estilos_totales_label), Paragraph(f"*** {total:.2f}",               estilo_totales)],
+        [Paragraph('<b>Subtotal:</b>', estilos_totales_label), Paragraph(f"*** {capital:.2f}",    estilo_totales)],
+        [Paragraph('Desc:',           estilos_totales_label), Paragraph(f"*** {descuento:.2f}",  estilo_totales)],
+        [Paragraph('Recargo:',        estilos_totales_label), Paragraph(f"*** {recargo:.2f}",    estilo_totales)],
+        [Paragraph('Interes:',        estilos_totales_label), Paragraph(f"*** {interes:.2f}",    estilo_totales)],
+        [Paragraph('Iva:',            estilos_totales_label), Paragraph(f"*** {iva:.2f}",        estilo_totales)],
+        [Paragraph('',                estilos_totales_label), Paragraph(f"*** {total:.2f}",      estilo_totales)],
     ]
 
     tabla_totales = Table(filas_totales, colWidths=[2*cm, 1.9*cm])
