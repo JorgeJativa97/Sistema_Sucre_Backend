@@ -34,8 +34,8 @@ IMG_SELLO  = os.path.join(IMG_DIR, 'sello.jpg')
 
 from reportlab.lib.pagesizes import A4
 
-# Media hoja A4: 21 x 14.85 cm
-MEDIA_CARTA = (A4[0], A4[1] / 2)
+# Media hoja A4 portrait (A5): 14.85 x 21 cm
+MEDIA_CARTA = (A4[1] / 2, A4[0])
 
 
 # ── SQL Queries ─────────────────────────────────────────────────────────────────
@@ -135,17 +135,17 @@ def _fetch(sql, params):
 def _watermark_sello(canvas, doc):
     img = PILImage.open(IMG_SELLO).convert('RGBA')
     r, g, b, a = img.split()
-    a = a.point(lambda x: int(x * 0.15))
+    a = a.point(lambda x: int(x * 1.5))  # Aumentar la opacidad
     img.putalpha(a)
     wm_buffer = BytesIO()
     img.save(wm_buffer, format='PNG')
     wm_buffer.seek(0)
 
     w, h = doc.pagesize
-    img_w = 5 * cm
-    img_h = 5 * cm
+    img_w = 8 * cm 
+    img_h = 8 * cm
     x = (w - img_w) / 2
-    y = (h - img_h) / 2
+    y = (h - img_h) / 1.8
 
     canvas.saveState()
     canvas.drawImage(ImageReader(wm_buffer), x, y, width=img_w, height=img_h, mask='auto')
@@ -192,10 +192,10 @@ def generar_pdf(titulo, rubros, abono, detalle_abono, cajero=None):
                 [Paragraph('<b>Avenida Bolivar y Ascazubi</b>', estilo_sub)],
                 [Paragraph('<b>Bahia de Caraquez - Sucre - Ecuador</b>', estilo_sub)],
                 [Paragraph('<b>info@sucre.gob.ec</b>', estilo_sub)],
-            ], colWidths=[12.8*cm], rowHeights=[0.38*cm, 0.28*cm, 0.28*cm, 0.28*cm]),
-            Image(IMG_SUCRE, width=2.2*cm, height=1.0*cm),
+            ], colWidths=[9.2*cm], rowHeights=[0.38*cm, 0.28*cm, 0.28*cm, 0.28*cm]),
+            Image(IMG_SUCRE, width=1.8*cm, height=1.0*cm),
         ]],
-        colWidths=[2.2*cm, 13.5*cm, 2.5*cm]
+        colWidths=[2.0*cm, 9.3*cm, 1.9*cm]
     )
     encabezado.setStyle(TableStyle([
         ('VALIGN',        (0, 0), (-1, -1), 'MIDDLE'),
@@ -225,7 +225,7 @@ def generar_pdf(titulo, rubros, abono, detalle_abono, cajero=None):
 
     caja_concepto = Table(
         [[Paragraph(concepto, estilo_concepto)]],
-        colWidths=[9*cm]
+        colWidths=[6*cm]
     )
     caja_concepto.setStyle(TableStyle([
         ('BOX',           (0, 0), (-1, -1), 0.5, colors.black),
@@ -238,7 +238,7 @@ def generar_pdf(titulo, rubros, abono, detalle_abono, cajero=None):
 
     tabla_concepto = Table(
         [[caja_concepto, Paragraph(f"Clave: <b>{clave}</b>", estilo_label)]],
-        colWidths=[9.5*cm, 8*cm]
+        colWidths=[6.5*cm, 3*cm]
     )
     tabla_concepto.setStyle(TableStyle([
         ('VALIGN',      (0, 0), (-1, -1), 'MIDDLE'),
@@ -275,7 +275,7 @@ def generar_pdf(titulo, rubros, abono, detalle_abono, cajero=None):
         filas_info.append([Paragraph(direccion_txt, estilo_valor), ''])
         spans.append(('SPAN', (0, 4), (1, 4)))
 
-    info_izq = Table(filas_info, colWidths=[3.2*cm, 8.4*cm])
+    info_izq = Table(filas_info, colWidths=[2.8*cm, 6.7*cm])
     info_izq.setStyle(TableStyle([
         ('FONTSIZE',      (0, 0), (-1, -1), 7),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 1),
@@ -287,9 +287,9 @@ def generar_pdf(titulo, rubros, abono, detalle_abono, cajero=None):
 
     info_der = Table([
         [Paragraph(f"Nro. Emision: {titulo.get('NRO_EMISION', '')}", estilo_nro)],
-    ], colWidths=[4.5*cm])
+    ], colWidths=[3.6*cm])
 
-    seccion_info = Table([[info_izq, info_der]], colWidths=[12.1*cm, 4.5*cm])
+    seccion_info = Table([[info_izq, info_der]], colWidths=[9.5*cm, 3.6*cm])
     seccion_info.setStyle(TableStyle([
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
     ]))
@@ -309,7 +309,7 @@ def generar_pdf(titulo, rubros, abono, detalle_abono, cajero=None):
             Paragraph(f"{valor:.2f}", estilo_valor_rubro),
         ])
 
-    tabla_rubros = Table(filas_rubros, colWidths=[8.5*cm, 2.5*cm])
+    tabla_rubros = Table(filas_rubros, colWidths=[6*cm, 2.5*cm])
     tabla_rubros.setStyle(TableStyle([
         ('FONTSIZE',      (0, 0), (-1, -1), 7),
         ('ALIGN',         (1, 0), (1, -1), 'RIGHT'),
@@ -368,7 +368,7 @@ def generar_pdf(titulo, rubros, abono, detalle_abono, cajero=None):
         [Paragraph(f"<b>Fecha Obligacion:</b> {_fmt_fecha(titulo.get('FECHA_OBLIGACION'))}", estilo_footer)],
         [Paragraph(f"<b>Fecha Pago:</b> {_fmt_fecha(fecha_pago)}", estilo_footer)],
     ]
-    tabla_pago = Table(filas_pago, colWidths=[4.7*cm])
+    tabla_pago = Table(filas_pago, colWidths=[4.6*cm])
     tabla_pago.setStyle(TableStyle([
         ('FONTSIZE',      (0, 0), (-1, -1), 6),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 1),
@@ -379,23 +379,23 @@ def generar_pdf(titulo, rubros, abono, detalle_abono, cajero=None):
     # Columna derecha: solo totales
     col_derecha = Table([
         [tabla_totales],
-    ], colWidths=[5*cm])
+    ], colWidths=[4.6*cm])
     col_derecha.setStyle(TableStyle([
         ('VALIGN',       (0, 0), (-1, -1), 'TOP'),
-        ('LEFTPADDING',  (0, 0), (0, 0), 0.5*cm),
+        ('LEFTPADDING',  (0, 0), (0, 0), 0.4*cm),
         ('RIGHTPADDING', (0, 0), (0, 0), 0),
     ]))
 
     # Columna izquierda: solo rubros
     col_izquierda = Table([
         [tabla_rubros],
-    ], colWidths=[11.3*cm])
+    ], colWidths=[8.5*cm])
     col_izquierda.setStyle(TableStyle([
         ('VALIGN',        (0, 0), (-1, -1), 'TOP'),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
     ]))
 
-    seccion_principal = Table([[col_izquierda, col_derecha]], colWidths=[11.3*cm, 5*cm])
+    seccion_principal = Table([[col_izquierda, col_derecha]], colWidths=[8.5*cm, 4.6*cm])
     seccion_principal.setStyle(TableStyle([
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
     ]))
@@ -406,7 +406,7 @@ def generar_pdf(titulo, rubros, abono, detalle_abono, cajero=None):
     if descripcion:
         desc_tabla = Table(
             [[Paragraph(f"<b>Descripcion:</b> {descripcion}", estilo_desc)]],
-            colWidths=[11*cm]
+            colWidths=[8.5*cm]
         )
         desc_tabla.setStyle(TableStyle([
             ('BOX',           (0, 0), (-1, -1), 0.75, colors.black),
@@ -420,7 +420,7 @@ def generar_pdf(titulo, rubros, abono, detalle_abono, cajero=None):
 
     seccion_inferior = Table(
         [[desc_tabla, tabla_pago]],
-        colWidths=[11.3*cm, 5*cm]
+        colWidths=[8.5*cm, 4.6*cm]
     )
     seccion_inferior.setStyle(TableStyle([
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
@@ -443,7 +443,7 @@ def generar_pdf(titulo, rubros, abono, detalle_abono, cajero=None):
                 [Paragraph(cajero, estilo_cajero_nombre)],
                 [Paragraph('Recaudador', estilo_cajero_label)],
             ],
-            colWidths=[16*cm]
+            colWidths=[11*cm]
         )
         caja_cajero.setStyle(TableStyle([
             ('BOX',           (0, 0), (-1, -1), 0.5, colors.black),
@@ -457,7 +457,7 @@ def generar_pdf(titulo, rubros, abono, detalle_abono, cajero=None):
             ('LEFTPADDING',   (0, 0), (-1, -1), 4),
             ('RIGHTPADDING',  (0, 0), (-1, -1), 4),
         ]))
-        tabla_cajero = Table([[caja_cajero]], colWidths=[19.4*cm])
+        tabla_cajero = Table([[caja_cajero]], colWidths=[13.1*cm])
         tabla_cajero.setStyle(TableStyle([
             ('ALIGN',      (0, 0), (-1, -1), 'CENTER'),
             ('TOPPADDING', (0, 0), (-1, -1), 4),
