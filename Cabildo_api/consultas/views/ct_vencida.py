@@ -13,7 +13,11 @@ from celery.result import AsyncResult
 
 from Cabildo_api.consultas.serializers.ct_vencida import CtVencidaSerializer
 from Cabildo_api.permissions import HasAPIKey
-from Cabildo_api.task.tasks import generar_reporte_cartera_vencida, generar_reporte_cartera_vencida_impuesto
+from Cabildo_api.task.tasks import (
+    generar_reporte_cartera_vencida,
+    generar_reporte_cartera_vencida_impuesto,
+    generar_reporte_cartera_vencida_porimpuesto,
+)
 import logging
 
 logger = logging.getLogger('api')
@@ -490,16 +494,15 @@ class CtVencidaPorTituloDetalleAPIView(BaseCarteraAPIView):
 class CtVPorimpuestoSerializerApiView(BaseCarteraAPIView):
     """
     Endpoint: GET /api/ct_vencida_porimpuesto/<year>/?codigos=95,140,200
-    Retorna la cartera vencida filtrada por uno o varios códigos de impuesto específicos.
+    Inicia la generación asíncrona del reporte filtrado por códigos de impuesto.
     El parámetro 'codigos' es obligatorio y acepta valores separados por coma.
-    Los resultados se agrupan por tipo de impuesto y año.
+    Responde con HTTP 202 (Accepted) inmediatamente con un task_id.
     """
 
     def get(self, request, year=None):
         try:
             year = self._get_year(request, year)
 
-            # Validar que se proporcionó el parámetro codigos
             codigos_param = request.query_params.get('codigos')
             if not codigos_param or not codigos_param.strip():
                 logger.warning("CtVPorimpuestoSerializerApiView - Parámetro codigos no proporcionado")
@@ -509,7 +512,6 @@ class CtVPorimpuestoSerializerApiView(BaseCarteraAPIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-            # Convertir "95,140,200" → [95, 140, 200] validando que sean enteros
             try:
                 codigos_list = [int(c.strip()) for c in codigos_param.split(',') if c.strip()]
                 if not codigos_list:
@@ -523,18 +525,13 @@ class CtVPorimpuestoSerializerApiView(BaseCarteraAPIView):
 
             logger.info(f"CtVPorimpuestoSerializerApiView - Consulta iniciada para year={year}, codigos={codigos_list}")
 
-            # Construir placeholders Oracle (:cod0, :cod1, ...) para la cláusula IN
-            # Esto evita SQL injection al no concatenar los valores directamente
-            placeholders = ', '.join([f':cod{i}' for i in range(len(codigos_list))])
-            sql = SQL_POR_IMPUESTO_TEMPLATE.format(placeholders=placeholders)
+            task = generar_reporte_cartera_vencida_porimpuesto.delay(year, codigos_list)
 
-            # Armar el diccionario de parámetros: {year: X, cod0: 95, cod1: 140, ...}
-            params = {'year': year}
-            params.update({f'cod{i}': cod for i, cod in enumerate(codigos_list)})
-
-            result = self._fetch_query(sql, params)
-            logger.info(f"CtVPorimpuestoSerializerApiView - Consulta exitosa. Registros: {len(result)}")
-            return Response(result, status=status.HTTP_200_OK)
+            return Response({
+                'task_id': task.id,
+                'status': 'PENDING',
+                'message': f'Generando reporte para el año {year} con {len(codigos_list)} código(s). Use el task_id para consultar el estado.'
+            }, status=status.HTTP_202_ACCEPTED)
 
         except ValueError as e:
             logger.warning(f"CtVPorimpuestoSerializerApiView - Parámetro inválido: {e}")
@@ -542,8 +539,47 @@ class CtVPorimpuestoSerializerApiView(BaseCarteraAPIView):
                 {"detail": "Parámetro inválido", "error": str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+
+class CtVPorimpuestoDatosAPIView(BaseCarteraAPIView):
+    """
+    Endpoint: GET /api/ct_vencida_porimpuesto/datos/<year>/?codigos=95,140,200
+    Retorna el contenido del reporte JSON generado por la tarea Celery.
+    Se llama después de que el status es SUCCESS para obtener los datos completos.
+    """
+
+    def get(self, request, year):
+        try:
+            year = self._get_year(request, year)
+
+            codigos_param = request.query_params.get('codigos')
+            if not codigos_param or not codigos_param.strip():
+                return Response(
+                    {"detail": "El parámetro 'codigos' es requerido"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            codigos_list = [int(c.strip()) for c in codigos_param.split(',') if c.strip()]
+            codigos_str = '_'.join(str(c) for c in sorted(codigos_list))
+            filepath = os.path.join(settings.MEDIA_ROOT, 'reportes', f'cartera_vencida_porimpuesto_{year}_{codigos_str}.json')
+
+            if not os.path.exists(filepath):
+                logger.warning(f"CtVPorimpuestoDatosAPIView - Archivo no encontrado: {filepath}")
+                return Response(
+                    {"detail": f"No se encontró el reporte para el año {year} con esos códigos. Genérelo primero."},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            with open(filepath, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            logger.info(f"CtVPorimpuestoDatosAPIView - Archivo servido: {filepath} ({len(data)} registros)")
+            return Response(data, status=status.HTTP_200_OK)
+
+        except ValueError as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return self._handle_error(e, 'CtVPorimpuestoSerializerApiView', request, year=year)
+            return self._handle_error(e, 'CtVPorimpuestoDatosAPIView', request, year=year)
 
 
 class CtVencidaDatosAPIView(BaseCarteraAPIView):
