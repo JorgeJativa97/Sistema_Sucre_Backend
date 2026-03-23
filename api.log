@@ -1352,3 +1352,4 @@ identity=[ImageReader@0x1ffa198e4a0]
 2026-03-18 16:09:41 | INFO | api | ComprobanteAPIView - cajero_rows: [{'CAJERO': 'FALCONES GARCIA FRANCISCO ANTONIO'}]
 2026-03-18 16:10:07 | INFO | api | ComprobanteAPIView - LOGIN_PAGO: 'FFALCONE'
 2026-03-18 16:10:07 | INFO | api | ComprobanteAPIView - cajero_rows: [{'CAJERO': 'FALCONES GARCIA FRANCISCO ANTONIO'}]
+2026-03-23 11:49:46 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001

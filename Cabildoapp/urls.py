@@ -5,6 +5,7 @@ from Cabildo_api.consultas.views.ct_vencida import (
     CtVencidaStatusAPIView,
     CtVencidaDatosAPIView,
     CtVencidaImpuestoAPIView,
+    CtVencidaImpuestoDatosAPIView,
     CtVencidaPorTituloAPIView,
     CtVencidaPorTituloDetalleAPIView,
     CtVPorimpuestoSerializerApiView,
@@ -18,8 +19,10 @@ urlpatterns = [
     path('api/ct_vencida/<int:year>/', CtVencidaSerializerAPIView.as_view(), name='ct_vencida_async'),
     path('api/ct_vencida/status/<str:task_id>/', CtVencidaStatusAPIView.as_view(), name='ct_vencida_status'),
     path('api/ct_vencida/datos/<int:year>/', CtVencidaDatosAPIView.as_view(), name='ct_vencida_datos'),
-    # Consultas síncronas
+    # Reporte por impuesto asíncrono (Celery)
     path('api/ct_vencida_impuesto/<int:year>/', CtVencidaImpuestoAPIView.as_view(), name='ct_vencida_impuesto'),
+    path('api/ct_vencida_impuesto/datos/<int:year>/', CtVencidaImpuestoDatosAPIView.as_view(), name='ct_vencida_impuesto_datos'),
+    # Consultas síncronas
     path('api/ct_vencida_titulo/', CtVencidaPorTituloAPIView.as_view(), name='ct_vencida_rubro'),
     path('api/ct_vencida_titulo_detalle/<int:year>/', CtVencidaPorTituloDetalleAPIView.as_view(), name='ct_vencida_desglosada_detalle'),
     path('api/ct_vencida_porimpuesto/<int:year>/', CtVPorimpuestoSerializerApiView.as_view(), name='ct_vencida_porimpuesto'),

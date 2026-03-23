@@ -13,7 +13,7 @@ from celery.result import AsyncResult
 
 from Cabildo_api.consultas.serializers.ct_vencida import CtVencidaSerializer
 from Cabildo_api.permissions import HasAPIKey
-from Cabildo_api.task.tasks import generar_reporte_cartera_vencida
+from Cabildo_api.task.tasks import generar_reporte_cartera_vencida, generar_reporte_cartera_vencida_impuesto
 import logging
 
 logger = logging.getLogger('api')
@@ -387,9 +387,8 @@ class CtVencidaStatusAPIView(BaseCarteraAPIView):
 class CtVencidaImpuestoAPIView(BaseCarteraAPIView):
     """
     Endpoint: GET /api/ct_vencida_impuesto/<year>/
-    Retorna la cartera vencida agrupada por tipo de impuesto y año,
-    con los totales de emisión, interés, coactiva, recargo, descuento, IVA y total.
-    Respuesta síncrona (sin Celery).
+    Inicia la generación asíncrona del reporte de cartera vencida por impuesto.
+    Responde con HTTP 202 (Accepted) inmediatamente con un task_id.
     """
 
     def get(self, request, year=None):
@@ -397,18 +396,50 @@ class CtVencidaImpuestoAPIView(BaseCarteraAPIView):
             year = self._get_year(request, year)
             logger.info(f"CtVencidaImpuestoAPIView - Consulta iniciada para year={year}")
 
-            result = self._fetch_query(SQL_IMPUESTO, {'year': year})
+            task = generar_reporte_cartera_vencida_impuesto.delay(year)
 
-            logger.info(f"CtVencidaImpuestoAPIView - Consulta exitosa. Registros: {len(result)}")
-            return Response(result, status=status.HTTP_200_OK)
+            return Response({
+                'task_id': task.id,
+                'status': 'PENDING',
+                'message': f'Generando reporte por impuesto para el año {year}. Use el task_id para consultar el estado.'
+            }, status=status.HTTP_202_ACCEPTED)
         except ValueError as e:
             logger.warning(f"CtVencidaImpuestoAPIView - Parámetro year inválido: {e}")
             return Response(
                 {"detail": "Parámetro year inválido", "error": str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+
+class CtVencidaImpuestoDatosAPIView(BaseCarteraAPIView):
+    """
+    Endpoint: GET /api/ct_vencida_impuesto/datos/<year>/
+    Retorna el contenido del reporte JSON generado por la tarea Celery.
+    Se llama después de que el status es SUCCESS para obtener los datos completos.
+    """
+
+    def get(self, request, year):
+        try:
+            year = self._get_year(request, year)
+            filepath = os.path.join(settings.MEDIA_ROOT, 'reportes', f'cartera_vencida_impuesto_{year}.json')
+
+            if not os.path.exists(filepath):
+                logger.warning(f"CtVencidaImpuestoDatosAPIView - Archivo no encontrado: {filepath}")
+                return Response(
+                    {"detail": f"No se encontró el reporte por impuesto para el año {year}. Genérelo primero."},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            with open(filepath, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            logger.info(f"CtVencidaImpuestoDatosAPIView - Archivo servido: {filepath} ({len(data)} registros)")
+            return Response(data, status=status.HTTP_200_OK)
+
+        except ValueError as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return self._handle_error(e, 'CtVencidaImpuestoAPIView', request, year=year)
+            return self._handle_error(e, 'CtVencidaImpuestoDatosAPIView', request, year=year)
 
 
 class CtVencidaPorTituloAPIView(BaseCarteraAPIView):
