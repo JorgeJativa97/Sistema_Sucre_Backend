@@ -17,6 +17,7 @@ from Cabildo_api.task.tasks import (
     generar_reporte_cartera_vencida,
     generar_reporte_cartera_vencida_impuesto,
     generar_reporte_cartera_vencida_porimpuesto,
+    generar_reporte_cartera_vencida_titulo_detalle,
 )
 import logging
 
@@ -468,8 +469,8 @@ class CtVencidaPorTituloAPIView(BaseCarteraAPIView):
 class CtVencidaPorTituloDetalleAPIView(BaseCarteraAPIView):
     """
     Endpoint: GET /api/ct_vencida_titulo_detalle/<year>/
-    Retorna el detalle de cartera vencida por contribuyente (cédula, nombre)
-    incluyendo todos los valores de cada título de impuesto hasta el año indicado.
+    Inicia la generación asíncrona del reporte detalle por contribuyente.
+    Responde con HTTP 202 (Accepted) inmediatamente con un task_id.
     """
 
     def get(self, request, year=None):
@@ -477,18 +478,50 @@ class CtVencidaPorTituloDetalleAPIView(BaseCarteraAPIView):
             year = self._get_year(request, year)
             logger.info(f"CtVencidaPorTituloDetalleAPIView - Consulta iniciada para year={year}")
 
-            result = self._fetch_query(SQL_TITULO_DETALLE, {'year': year})
+            task = generar_reporte_cartera_vencida_titulo_detalle.delay(year)
 
-            logger.info(f"CtVencidaPorTituloDetalleAPIView - Consulta exitosa. Registros: {len(result)}")
-            return Response(result, status=status.HTTP_200_OK)
+            return Response({
+                'task_id': task.id,
+                'status': 'PENDING',
+                'message': f'Generando reporte detalle para el año {year}. Use el task_id para consultar el estado.'
+            }, status=status.HTTP_202_ACCEPTED)
         except ValueError as e:
             logger.warning(f"CtVencidaPorTituloDetalleAPIView - Parámetro year inválido: {e}")
             return Response(
                 {"detail": "Parámetro year inválido", "error": str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+
+class CtVencidaTituloDetalleDatosAPIView(BaseCarteraAPIView):
+    """
+    Endpoint: GET /api/ct_vencida_titulo_detalle/datos/<year>/
+    Retorna el contenido del reporte JSON generado por la tarea Celery.
+    Se llama después de que el status es SUCCESS para obtener los datos completos.
+    """
+
+    def get(self, request, year):
+        try:
+            year = self._get_year(request, year)
+            filepath = os.path.join(settings.MEDIA_ROOT, 'reportes', f'cartera_vencida_titulo_detalle_{year}.json')
+
+            if not os.path.exists(filepath):
+                logger.warning(f"CtVencidaTituloDetalleDatosAPIView - Archivo no encontrado: {filepath}")
+                return Response(
+                    {"detail": f"No se encontró el reporte detalle para el año {year}. Genérelo primero."},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            with open(filepath, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            logger.info(f"CtVencidaTituloDetalleDatosAPIView - Archivo servido: {filepath} ({len(data)} registros)")
+            return Response(data, status=status.HTTP_200_OK)
+
+        except ValueError as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return self._handle_error(e, 'CtVencidaPorTituloDetalleAPIView', request, year=year)
+            return self._handle_error(e, 'CtVencidaTituloDetalleDatosAPIView', request, year=year)
 
 
 class CtVPorimpuestoSerializerApiView(BaseCarteraAPIView):
