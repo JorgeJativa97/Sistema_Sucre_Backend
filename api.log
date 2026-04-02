@@ -1353,3 +1353,211 @@ identity=[ImageReader@0x1ffa198e4a0]
 2026-03-18 16:10:07 | INFO | api | ComprobanteAPIView - LOGIN_PAGO: 'FFALCONE'
 2026-03-18 16:10:07 | INFO | api | ComprobanteAPIView - cajero_rows: [{'CAJERO': 'FALCONES GARCIA FRANCISCO ANTONIO'}]
 2026-03-23 11:49:46 | INFO | api | CtVencidaImpuestoAPIView - Consulta iniciada para year=2001
+2026-04-02 12:05:17 | INFO | api | RecaudacionImpuestoAPIView - Consulta iniciada: 2025-01-01 → 2025-12-31
+2026-04-02 12:06:27 | ERROR | api | RecaudacionImpuestoAPIView - Error inesperado: 
+Retry limit exceeded while trying to reconnect to the Celery redis result store backend. The Celery application must be restarted.
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 855, in connect_check_health
+    sock = self.retry.call_with_retry(
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\retry.py", line 116, in call_with_retry
+    return do()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 856, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 1270, in _connect
+    for res in socket.getaddrinfo(
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 130, in reconnect_on_error
+    yield
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 180, in _consume_from
+    self._pubsub.subscribe(key)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\client.py", line 1090, in subscribe
+    ret_val = self.execute_command("SUBSCRIBE", *new_channels.keys())
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\client.py", line 914, in execute_command
+    self.connection = self.connection_pool.get_connection()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\utils.py", line 196, in wrapper
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 2603, in get_connection
+    connection.connect()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 846, in connect
+    self.connect_check_health(check_health=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 863, in connect_check_health
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 11001 connecting to redis:6379. getaddrinfo failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 855, in connect_check_health
+    sock = self.retry.call_with_retry(
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\retry.py", line 116, in call_with_retry
+    return do()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 856, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 1270, in _connect
+    for res in socket.getaddrinfo(
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 133, in reconnect_on_error
+    self._ensure(self._reconnect_pubsub, ())
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 428, in ensure
+    return retry_over_time(
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\kombu\utils\functional.py", line 318, in retry_over_time
+    return fun(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 109, in _reconnect_pubsub
+    metas = self.backend.client.mget(self.subscribed_to)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\commands\core.py", line 2091, in mget
+    return self.execute_command("MGET", *args, **options)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\client.py", line 657, in execute_command
+    return self._execute_command(*args, **options)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\client.py", line 663, in _execute_command
+    conn = self.connection or pool.get_connection()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\utils.py", line 196, in wrapper
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 2603, in get_connection
+    connection.connect()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 846, in connect
+    self.connect_check_health(check_health=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 863, in connect_check_health
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 11001 connecting to redis:6379. getaddrinfo failed.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\reporte_recaudacion.py", line 49, in get
+    task = generar_reporte_recaudacion.delay(fecha_inicio, fecha_fin)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\app\task.py", line 444, in delay
+    return self.apply_async(args, kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\app\task.py", line 608, in apply_async
+    return app.send_task(
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\app\base.py", line 946, in send_task
+    self.backend.on_task_call(P, task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 417, in on_task_call
+    self.result_consumer.consume_from(task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 172, in consume_from
+    return self.start(task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 150, in start
+    self._consume_from(initial_task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 179, in _consume_from
+    with self.reconnect_on_error():
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 136, in reconnect_on_error
+    raise RuntimeError(E_RETRY_LIMIT_EXCEEDED) from e
+RuntimeError: 
+Retry limit exceeded while trying to reconnect to the Celery redis result store backend. The Celery application must be restarted.
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 855, in connect_check_health
+    sock = self.retry.call_with_retry(
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\retry.py", line 116, in call_with_retry
+    return do()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 856, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 1270, in _connect
+    for res in socket.getaddrinfo(
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 130, in reconnect_on_error
+    yield
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 180, in _consume_from
+    self._pubsub.subscribe(key)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\client.py", line 1090, in subscribe
+    ret_val = self.execute_command("SUBSCRIBE", *new_channels.keys())
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\client.py", line 914, in execute_command
+    self.connection = self.connection_pool.get_connection()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\utils.py", line 196, in wrapper
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 2603, in get_connection
+    connection.connect()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 846, in connect
+    self.connect_check_health(check_health=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 863, in connect_check_health
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 11001 connecting to redis:6379. getaddrinfo failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 855, in connect_check_health
+    sock = self.retry.call_with_retry(
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\retry.py", line 116, in call_with_retry
+    return do()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 856, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 1270, in _connect
+    for res in socket.getaddrinfo(
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 133, in reconnect_on_error
+    self._ensure(self._reconnect_pubsub, ())
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 428, in ensure
+    return retry_over_time(
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\kombu\utils\functional.py", line 318, in retry_over_time
+    return fun(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 109, in _reconnect_pubsub
+    metas = self.backend.client.mget(self.subscribed_to)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\commands\core.py", line 2091, in mget
+    return self.execute_command("MGET", *args, **options)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\client.py", line 657, in execute_command
+    return self._execute_command(*args, **options)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\client.py", line 663, in _execute_command
+    conn = self.connection or pool.get_connection()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\utils.py", line 196, in wrapper
+    return func(*args, **kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 2603, in get_connection
+    connection.connect()
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 846, in connect
+    self.connect_check_health(check_health=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\redis\connection.py", line 863, in connect_check_health
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 11001 connecting to redis:6379. getaddrinfo failed.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\reporte_recaudacion.py", line 49, in get
+    task = generar_reporte_recaudacion.delay(fecha_inicio, fecha_fin)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\app\task.py", line 444, in delay
+    return self.apply_async(args, kwargs)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\app\task.py", line 608, in apply_async
+    return app.send_task(
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\app\base.py", line 946, in send_task
+    self.backend.on_task_call(P, task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 417, in on_task_call
+    self.result_consumer.consume_from(task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 172, in consume_from
+    return self.start(task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 150, in start
+    self._consume_from(initial_task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 179, in _consume_from
+    with self.reconnect_on_error():
+  File "C:\Users\TIC-PC-01\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\redis.py", line 136, in reconnect_on_error
+    raise RuntimeError(E_RETRY_LIMIT_EXCEEDED) from e
+RuntimeError: 
+Retry limit exceeded while trying to reconnect to the Celery redis result store backend. The Celery application must be restarted.
+

@@ -309,6 +309,80 @@ def generar_reporte_cartera_vencida_porimpuesto(self, year, codigos_list):
         raise
 
 
+_SQL_RECAUDACION = """
+SELECT
+    pk_uti.FIND_IMPUESTO(impuesto)  AS IMPUESTO,
+    SUM(total)                       AS EMISIONTITULO,
+    SUM(interes)                     AS INTERES,
+    SUM(coactiva)                    AS COACTIVA,
+    SUM(descuento)                   AS DESCUENTO,
+    SUM(recargo)                     AS RECARGO,
+    SUM(NVL(iva, 0))                 AS IVA,
+    SUM(nro_titulos)                 AS NRO_TITULOS,
+    SUM(total) + SUM(interes) + SUM(coactiva) + SUM(recargo)
+        - SUM(descuento) + SUM(NVL(iva, 0)) AS TOTAL
+FROM V_COBROMAES
+WHERE fpago BETWEEN TO_DATE(:fecha_inicio, 'YYYY-MM-DD')
+                AND TO_DATE(:fecha_fin,    'YYYY-MM-DD')
+GROUP BY pk_uti.FIND_IMPUESTO(impuesto)
+ORDER BY 1
+"""
+
+
+@shared_task(bind=True, name='generar_reporte_recaudacion')
+def generar_reporte_recaudacion(self, fecha_inicio, fecha_fin):
+    """
+    Tarea asíncrona para generar reporte de recaudación por impuesto.
+    fecha_inicio / fecha_fin: strings en formato 'YYYY-MM-DD'.
+    """
+    try:
+        self.update_state(state='PROCESSING', meta={'progress': 10, 'status': 'Consultando datos...'})
+
+        logger.info(f"Iniciando generación de reporte de recaudación: {fecha_inicio} → {fecha_fin}")
+
+        with connection.cursor() as cursor:
+            cursor.execute(_SQL_RECAUDACION, {
+                'fecha_inicio': fecha_inicio,
+                'fecha_fin':    fecha_fin,
+            })
+            cols = [c[0] for c in cursor.description]
+            rows = cursor.fetchall()
+
+        self.update_state(state='PROCESSING', meta={'progress': 50, 'status': 'Procesando datos...'})
+
+        data = [
+            {col: (float(val) if isinstance(val, Decimal) else val)
+             for col, val in zip(cols, row)}
+            for row in rows
+        ]
+
+        self.update_state(state='PROCESSING', meta={'progress': 80, 'status': 'Guardando reporte...'})
+
+        media_dir = os.path.join(settings.MEDIA_ROOT, 'reportes')
+        os.makedirs(media_dir, exist_ok=True)
+
+        filename = f'recaudacion_{fecha_inicio}_{fecha_fin}.json'
+        filepath = os.path.join(media_dir, filename)
+
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+
+        logger.info(f"Reporte de recaudación generado exitosamente: {filename}")
+
+        return {
+            'status': 'SUCCESS',
+            'fecha_inicio': fecha_inicio,
+            'fecha_fin':    fecha_fin,
+            'records': len(data),
+            'file': f'/media/reportes/{filename}',
+        }
+
+    except Exception as e:
+        logger.error(f"Error generando reporte de recaudación: {str(e)}", exc_info=True)
+        self.update_state(state='FAILURE', meta={'error': str(e)})
+        raise
+
+
 _SQL_CT_VENCIDA_TITULO_DETALLE = """
 SELECT CEDULA,
        NOMBRE,
