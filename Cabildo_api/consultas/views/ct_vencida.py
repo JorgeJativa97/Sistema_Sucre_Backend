@@ -1,18 +1,14 @@
 from datetime import datetime
-from decimal import Decimal
-import traceback
 import json
 import os
 
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.db import connection
 from django.conf import settings
 from celery.result import AsyncResult
 
 from Cabildo_api.consultas.serializers.ct_vencida import CtVencidaSerializer
-from Cabildo_api.permissions import HasAPIKey
+from Cabildo_api.consultas.views.base import BaseAPIView
 from Cabildo_api.task.tasks import (
     generar_reporte_cartera_vencida,
     generar_reporte_cartera_vencida_impuesto,
@@ -264,14 +260,12 @@ ORDER BY ANIO DESC
 
 # ── Clase Base ─────────────────────────────────────────────────────────────────
 
-class BaseCarteraAPIView(APIView):
+class BaseCarteraAPIView(BaseAPIView):
     """
-    Clase base para todos los endpoints de cartera vencida.
-    Centraliza la validación del año, la ejecución de queries y el manejo de errores
-    para evitar repetir el mismo código en cada vista.
-    Requiere API Key en el header X-API-Key para acceder.
+    Clase base para los endpoints de cartera vencida.
+    Hereda autenticación, conexión a BD y manejo de errores de BaseAPIView.
+    Agrega la validación del parámetro año específica de cartera.
     """
-    permission_classes = [HasAPIKey]
 
     def _get_year(self, request, year=None):
         """
@@ -285,38 +279,6 @@ class BaseCarteraAPIView(APIView):
         if year <= 0:
             raise ValueError("El año debe ser un número positivo")
         return year
-
-    def _fetch_query(self, sql, params=None):
-        """
-        Ejecuta una query SQL contra la base de datos Oracle y retorna
-        una lista de diccionarios con los resultados.
-        Convierte automáticamente los valores Decimal a float para
-        que sean serializables en JSON.
-        """
-        with connection.cursor() as cursor:
-            cursor.execute(sql, params or {})
-            cols = [c[0] for c in cursor.description]
-            rows = cursor.fetchall()
-        return [
-            {col: (float(val) if isinstance(val, Decimal) else val)
-             for col, val in zip(cols, row)}
-            for row in rows
-        ]
-
-    def _handle_error(self, e, view_name, request, **extra):
-        """
-        Registra el error en el log con contexto de la petición
-        y retorna una respuesta HTTP 500 estandarizada.
-        """
-        logger.error(
-            f"{view_name} - Error inesperado: {str(e)}\n{traceback.format_exc()}",
-            exc_info=True,
-            extra={'method': 'GET', 'path': request.path, **extra}
-        )
-        return Response(
-            {"detail": "Error al ejecutar query", "error": str(e)},
-            status=status.HTTP_500_INTERNAL_SERVER_ERROR
-        )
 
 
 # ── Views ───────────────────────────────────────────────────────────────────────

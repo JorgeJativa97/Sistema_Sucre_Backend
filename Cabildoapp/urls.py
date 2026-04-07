@@ -14,7 +14,12 @@ from Cabildo_api.consultas.views.ct_vencida import (
 )
 from Cabildo_api.consultas.views.bienes_inmuebles import BienesInmueblesAPIView
 from Cabildo_api.consultas.views.comprobante import ComprobanteAPIView
-from Cabildo_api.consultas.views.reporte_recaudacion import RecaudacionImpuestoAPIView, RecaudacionDatosAPIView
+from Cabildo_api.consultas.views.reporte_recaudacion import (
+    RecaudacionImpuestoAPIView,
+    RecaudacionDatosAPIView,
+    RecaudacionRubroApiView,
+    RecaudacionRubroDatosAPIView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +41,9 @@ urlpatterns = [
     # Reporte de recaudación por impuesto
     path('api/recaudacion/', RecaudacionImpuestoAPIView.as_view(), name='recaudacion_impuesto'),
     path('api/recaudacion/datos/', RecaudacionDatosAPIView.as_view(), name='recaudacion_datos'),
+    # Reporte de recaudación por rubro
+    path('api/recaudacion_rubro/', RecaudacionRubroApiView.as_view(), name='recaudacion_rubro'),
+    path('api/recaudacion_rubro/datos/', RecaudacionRubroDatosAPIView.as_view(), name='recaudacion_rubro_datos'),
      # Comprobante de pago
     path('api/comprobante/<int:emi01codi>/', ComprobanteAPIView.as_view(), name='comprobante'),
     path('api/comprobante/<int:emi01codi>/<int:nro_abono>/', ComprobanteAPIView.as_view(), name='comprobante_abono'),
