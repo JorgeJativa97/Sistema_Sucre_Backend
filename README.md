@@ -72,7 +72,7 @@ Los reportes pesados (consultas Oracle que pueden tardar 30+ minutos) siguen un 
         │
         ▼
 4. Cliente consulta el estado periódicamente (polling)
-   GET /api/ct_vencida/status/<task_id>/
+   GET /api/status/<task_id>/
    → { "status": "PROCESSING", "progress": 50 }
    → { "status": "SUCCESS", ... }
         │
@@ -90,12 +90,19 @@ Los reportes pesados (consultas Oracle que pueden tardar 30+ minutos) siguen un 
 
 ---
 
+### Estado de tareas
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| GET | `/api/status/<task_id>/` | Consulta el estado de cualquier tarea Celery |
+
+---
+
 ### Cartera Vencida
 
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
 | GET | `/api/ct_vencida/<year>/` | Inicia reporte general asíncrono |
-| GET | `/api/ct_vencida/status/<task_id>/` | Consulta estado de cualquier tarea Celery |
 | GET | `/api/ct_vencida/datos/<year>/` | Descarga datos del reporte general |
 | GET | `/api/ct_vencida_impuesto/<year>/` | Inicia reporte por tipo de impuesto asíncrono |
 | GET | `/api/ct_vencida_impuesto/datos/<year>/` | Descarga datos del reporte por impuesto |
@@ -134,7 +141,7 @@ curl -H "x-api-key: ClaveSecreta123" \
 
 # 2. Consultar estado
 curl -H "x-api-key: ClaveSecreta123" \
-  "http://192.168.50.90:8000/api/ct_vencida/status/uuid.../"
+  "http://192.168.50.90:8000/api/status/uuid.../"
 # → {"status":"SUCCESS","records":71,...}
 
 # 3. Descargar datos
@@ -213,6 +220,67 @@ FLOWER_PASSWORD=<contraseña>
 
 > Flower corre como servicio Docker independiente definido en `docker-compose.yml` con el comando:
 > `celery -A Cabildoapp flower --port=5555 --basic_auth=USER:PASSWORD`
+
+---
+
+## Levantar en entorno local (Windows)
+
+### Requisitos previos
+
+- Redis instalado en `C:\Program Files\Redis\`
+- Entorno virtual activado con todas las dependencias
+
+### Verificar que Redis esté corriendo
+
+```bash
+netstat -ano | findstr :6379
+```
+
+Si no aparece ningún resultado, levántalo manualmente:
+
+```bash
+& "C:\Program Files\Redis\redis-server.exe"
+```
+
+### Levantar los 3 servicios (una terminal por cada uno)
+
+**Terminal 1 — Celery worker**
+```bash
+cd "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp"
+.\venv\Scripts\Activate.ps1
+celery -A Cabildoapp worker --loglevel=info --pool=solo
+```
+
+> En Windows se debe usar `--pool=solo` porque el pool `prefork` (multiprocessing) tiene restricciones de permisos.
+
+**Terminal 2 — Django**
+```bash
+cd "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp"
+.\venv\Scripts\Activate.ps1
+python manage.py runserver
+```
+
+### Probar un endpoint local
+
+```bash
+# 1. Iniciar reporte
+curl -H "x-api-key: ClaveSecreta123" "http://localhost:8000/api/recaudacion/?fecha_inicio=2025-01-01&fecha_fin=2025-12-31"
+
+# 2. Consultar estado
+curl -H "x-api-key: ClaveSecreta123" "http://localhost:8000/api/status/<task_id>/"
+
+# 3. Descargar datos
+curl -H "x-api-key: ClaveSecreta123" "http://localhost:8000/api/recaudacion/datos/?fecha_inicio=2025-01-01&fecha_fin=2025-12-31"
+```
+
+### Nota sobre la URL de Redis
+
+En local el `settings.py` usa `redis://localhost:6379/0` por defecto.
+En producción (Docker) se sobreescribe desde el `.env`:
+```
+CELERY_BROKER_URL=redis://redis:6379/0
+CELERY_RESULT_BACKEND=redis://redis:6379/0
+```
 
 ---
 

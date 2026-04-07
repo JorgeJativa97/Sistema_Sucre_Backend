@@ -1561,3 +1561,99 @@ Traceback (most recent call last):
 RuntimeError: 
 Retry limit exceeded while trying to reconnect to the Celery redis result store backend. The Celery application must be restarted.
 
+2026-04-07 11:50:56 | INFO | api | RecaudacionRubroApiView - Consulta iniciada: 2025-01-01 → 2025-01-31
+2026-04-07 11:50:57 | INFO | api | Iniciando generación de reporte de recaudación por rubro: 2025-01-01 → 2025-01-31
+2026-04-07 11:50:57 | ERROR | api | Error generando reporte de recaudación por rubro: unsupported format character 'N' (0x4e) at index 191
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\task\tasks.py", line 530, in generar_reporte_recaudacion_rubro
+    cursor.execute(_SQL_RECAUDACION_RUBRO, {
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 497, in _fix_for_params
+    query = query % args
+ValueError: unsupported format character 'N' (0x4e) at index 191
+2026-04-07 14:14:24 | INFO | api | RecaudacionRubroApiView - Consulta iniciada: 2025-01-01 → 2025-01-31
+2026-04-07 14:17:10 | INFO | api | Iniciando generación de reporte de recaudación por rubro: 2025-01-01 → 2025-01-31
+2026-04-07 14:17:10 | ERROR | api | Error generando reporte de recaudación por rubro: unsupported format character 'N' (0x4e) at index 191
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\task\tasks.py", line 530, in generar_reporte_recaudacion_rubro
+    cursor.execute(_SQL_RECAUDACION_RUBRO, {
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 497, in _fix_for_params
+    query = query % args
+ValueError: unsupported format character 'N' (0x4e) at index 191
+2026-04-07 14:18:51 | ERROR | api | TaskStatusAPIView - Error inesperado: Exception information must include the exception type
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 453, in exception_to_python
+    exc_type = exc['exc_type']
+KeyError: 'exc_type'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\base.py", line 67, in get
+    state = task_result.state
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 505, in state
+    return self._get_task_meta()['status']
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 444, in _get_task_meta
+    return self._maybe_set_cache(self.backend.get_task_meta(self.id))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 707, in get_task_meta
+    meta = self._get_task_meta_for(task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 1099, in _get_task_meta_for
+    return self.decode_result(meta)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 524, in decode_result
+    return self.meta_from_decoded(self.decode(payload))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 520, in meta_from_decoded
+    meta['result'] = self.exception_to_python(meta['result'])
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 455, in exception_to_python
+    raise ValueError("Exception information must include "
+ValueError: Exception information must include the exception type
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 453, in exception_to_python
+    exc_type = exc['exc_type']
+KeyError: 'exc_type'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\base.py", line 67, in get
+    state = task_result.state
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 505, in state
+    return self._get_task_meta()['status']
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 444, in _get_task_meta
+    return self._maybe_set_cache(self.backend.get_task_meta(self.id))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 707, in get_task_meta
+    meta = self._get_task_meta_for(task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 1099, in _get_task_meta_for
+    return self.decode_result(meta)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 524, in decode_result
+    return self.meta_from_decoded(self.decode(payload))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 520, in meta_from_decoded
+    meta['result'] = self.exception_to_python(meta['result'])
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 455, in exception_to_python
+    raise ValueError("Exception information must include "
+ValueError: Exception information must include the exception type
+2026-04-07 14:19:04 | INFO | api | RecaudacionRubroApiView - Consulta iniciada: 2025-01-01 → 2025-01-31
+2026-04-07 14:19:04 | INFO | api | Iniciando generación de reporte de recaudación por rubro: 2025-01-01 → 2025-01-31
+2026-04-07 14:19:05 | INFO | api | Reporte de recaudación por rubro generado exitosamente: recaudacion_rubro_2025-01-01_2025-01-31.json
+2026-04-07 14:19:09 | INFO | api | RecaudacionRubroApiView - Consulta iniciada: 2025-01-01 → 2025-01-31
+2026-04-07 14:19:09 | INFO | api | Iniciando generación de reporte de recaudación por rubro: 2025-01-01 → 2025-01-31
+2026-04-07 14:19:10 | INFO | api | Reporte de recaudación por rubro generado exitosamente: recaudacion_rubro_2025-01-01_2025-01-31.json
+2026-04-07 14:21:50 | INFO | api | RecaudacionRubroDatosAPIView - Archivo servido: recaudacion_rubro_2025-01-01_2025-01-31.json (72 registros)
+2026-04-07 14:45:03 | INFO | api | RecaudacionRubroApiView - Consulta iniciada: 2026-03-01 → 2026-03-31
+2026-04-07 14:45:03 | INFO | api | Iniciando generación de reporte de recaudación por rubro: 2026-03-01 → 2026-03-31
+2026-04-07 14:45:05 | INFO | api | Reporte de recaudación por rubro generado exitosamente: recaudacion_rubro_2026-03-01_2026-03-31.json
+2026-04-07 14:45:07 | INFO | api | RecaudacionRubroDatosAPIView - Archivo servido: recaudacion_rubro_2026-03-01_2026-03-31.json (57 registros)

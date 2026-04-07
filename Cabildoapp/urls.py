@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.urls import path
 from Cabildo_api.consultas.views.ct_vencida import (
     CtVencidaSerializerAPIView,
-    CtVencidaStatusAPIView,
     CtVencidaDatosAPIView,
     CtVencidaImpuestoAPIView,
     CtVencidaImpuestoDatosAPIView,
@@ -12,6 +11,7 @@ from Cabildo_api.consultas.views.ct_vencida import (
     CtVPorimpuestoSerializerApiView,
     CtVPorimpuestoDatosAPIView,
 )
+from Cabildo_api.consultas.views.base import TaskStatusAPIView
 from Cabildo_api.consultas.views.bienes_inmuebles import BienesInmueblesAPIView
 from Cabildo_api.consultas.views.comprobante import ComprobanteAPIView
 from Cabildo_api.consultas.views.reporte_recaudacion import (
@@ -25,7 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # Reporte completo asíncrono (Celery)
     path('api/ct_vencida/<int:year>/', CtVencidaSerializerAPIView.as_view(), name='ct_vencida_async'),
-    path('api/ct_vencida/status/<str:task_id>/', CtVencidaStatusAPIView.as_view(), name='ct_vencida_status'),
+    # Endpoint genérico de status para cualquier tarea Celery
+    path('api/status/<str:task_id>/', TaskStatusAPIView.as_view(), name='task_status'),
     path('api/ct_vencida/datos/<int:year>/', CtVencidaDatosAPIView.as_view(), name='ct_vencida_datos'),
     # Reporte por impuesto asíncrono (Celery)
     path('api/ct_vencida_impuesto/<int:year>/', CtVencidaImpuestoAPIView.as_view(), name='ct_vencida_impuesto'),
