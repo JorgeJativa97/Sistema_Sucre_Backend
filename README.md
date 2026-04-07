@@ -181,6 +181,41 @@ Los archivos JSON se guardan en `MEDIA_ROOT/reportes/` y persisten para consulta
 
 ---
 
+## Monitoreo de tareas con Flower
+
+Flower es la interfaz web para monitorear las tareas Celery en tiempo real.
+
+**Acceso:**
+```
+http://192.168.50.90:5555
+```
+
+Requiere usuario y contraseña configurados en el `.env`:
+```
+FLOWER_USER=<usuario>
+FLOWER_PASSWORD=<contraseña>
+```
+
+**Qué puedes ver en Flower:**
+
+| Sección | Descripción |
+|---------|-------------|
+| Dashboard | Estado general del worker y tareas activas |
+| Tasks | Historial de todas las tareas (PENDING, SUCCESS, FAILURE) |
+| Workers | Estado del celery_worker y su concurrencia |
+| Broker | Estado de la cola en Redis |
+
+**Flujo típico de monitoreo:**
+1. Ingresar a `http://192.168.50.90:5555`
+2. Ir a la pestaña **Tasks**
+3. Buscar el `task_id` retornado por el endpoint
+4. Ver el estado, progreso y resultado de la tarea
+
+> Flower corre como servicio Docker independiente definido en `docker-compose.yml` con el comando:
+> `celery -A Cabildoapp flower --port=5555 --basic_auth=USER:PASSWORD`
+
+---
+
 ## Levantar el servidor (producción Linux)
 
 ```bash
