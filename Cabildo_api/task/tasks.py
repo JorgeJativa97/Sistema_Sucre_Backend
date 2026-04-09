@@ -567,3 +567,70 @@ def generar_reporte_recaudacion_rubro(self, fecha_inicio, fecha_fin):
         logger.error(f"Error generando reporte de recaudación por rubro: {str(e)}", exc_info=True)
         self.update_state(state='FAILURE', meta={'error': str(e)})
         raise
+
+
+_SQL_RECAUDACION_RUBRO_ANIO_EMI = """
+SELECT F_DESCCOMPONENTE(EMI04CODI) RUBRO,SUM(VALOR) TOTAL
+FROM V_COBROSORIGEN
+WHERE FPAGO BETWEEN TO_DATE(:fecha_inicio, 'YYYY-MM-DD') AND TO_DATE(:fecha_fin, 'YYYY-MM-DD')
+AND TIPO LIKE '%%NORMAL%%'
+AND EMI01ANIO = :year
+GROUP BY  F_DESCCOMPONENTE(EMI04CODI)
+ORDER BY F_DESCCOMPONENTE(EMI04CODI)
+"""
+
+@shared_task(bind=True, name='generar_reporte_recaudacion_rubro_anio_emi')
+def generar_reporte_recaudacion_rubro_anio_emi(self, year, fecha_inicio, fecha_fin):
+    """
+    Tarea asíncrona para generar reporte de recaudación por rubro por anio de emision.
+    fecha_inicio / fecha_fin: strings en formato 'YYYY-MM-DD'.
+    year: int en formato 'YYYY'
+    """
+    try:
+        self.update_state(state='PROCESSING', meta={'progress': 10, 'status': 'Consultando datos...'})
+
+        logger.info(f"Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:{year} → {fecha_inicio} → {fecha_fin}")
+
+        with connection.cursor() as cursor:
+            cursor.execute(_SQL_RECAUDACION_RUBRO_ANIO_EMI, {
+                'year' : year,
+                'fecha_inicio': fecha_inicio,
+                'fecha_fin':    fecha_fin,
+            })
+            cols = [c[0] for c in cursor.description]
+            rows = cursor.fetchall()
+
+        self.update_state(state='PROCESSING', meta={'progress': 50, 'status': 'Procesando datos...'})
+
+        data = [
+            {col: (float(val) if isinstance(val, Decimal) else val)
+             for col, val in zip(cols, row)}
+            for row in rows
+        ]
+
+        self.update_state(state='PROCESSING', meta={'progress': 80, 'status': 'Guardando reporte...'})
+
+        media_dir = os.path.join(settings.MEDIA_ROOT, 'reportes')
+        os.makedirs(media_dir, exist_ok=True)
+
+        filename = f'recaudacion_rubro_anio_emi_{year}_{fecha_inicio}_{fecha_fin}.json'
+        filepath = os.path.join(media_dir, filename)
+
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+
+        logger.info(f"Reporte de recaudación por rubro por año de emisión generado exitosamente: {filename}")
+
+        return {
+            'status': 'SUCCESS',
+            'fecha_inicio': fecha_inicio,
+            'fecha_fin':    fecha_fin,
+            'year' : year,
+            'records': len(data),
+            'file': f'/media/reportes/{filename}',
+        }
+
+    except Exception as e:
+        logger.error(f"Error generando reporte de recaudación por rubro por anio de emision: {str(e)}", exc_info=True)
+        self.update_state(state='FAILURE', meta={'error': str(e)})
+        raise

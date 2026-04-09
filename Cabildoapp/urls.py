@@ -19,6 +19,8 @@ from Cabildo_api.consultas.views.reporte_recaudacion import (
     RecaudacionDatosAPIView,
     RecaudacionRubroApiView,
     RecaudacionRubroDatosAPIView,
+    RecaudacionRubroAnioEmiApiView,
+    RecaudacionRubroAnioEmiDatosAPIView,
 )
 
 urlpatterns = [
@@ -48,5 +50,8 @@ urlpatterns = [
      # Comprobante de pago
     path('api/comprobante/<int:emi01codi>/', ComprobanteAPIView.as_view(), name='comprobante'),
     path('api/comprobante/<int:emi01codi>/<int:nro_abono>/', ComprobanteAPIView.as_view(), name='comprobante_abono'),
+      # Reporte de recaudacion por año de emision
+    path('api/recaudacion_rubro_anioemi/', RecaudacionRubroAnioEmiApiView.as_view(), name='recaudacion_rubro_anioemi'),
+    path('api/recaudacion_rubro_anio_emi/datos/', RecaudacionRubroAnioEmiDatosAPIView.as_view(), name='recaudacion_rubro_anio_emi_datos'),
 ]
 

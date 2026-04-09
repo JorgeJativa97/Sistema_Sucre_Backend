@@ -24,4 +24,13 @@ class RecaudacionImpuestoRubroSerializer(serializers.Serializer):
     Los campos en mayúsculas coinciden con los nombres de columna que retorna Oracle.
     """
     RUBRO = serializers.CharField(allow_null=True)
-    TOTAL = serializers.DecimalField(max_digits=30, decimal_places=2)   
+    TOTAL = serializers.DecimalField(max_digits=30, decimal_places=2)
+
+class RecaudacionImpuestoRubroAnio(serializers.Serializer):
+    """
+    Serializer para reporte de recaudacion por rubro por año de emision.
+    Usado por el endpoint GET /api/recaudacion_rubro_anioemi/.
+    Los campos en mayúsculas coinciden con los nombres de columna que retorna Oracle.
+    """
+    RUBRO = serializers.CharField(allow_null=True)
+    TOTAL = serializers.DecimalField(max_digits=30, decimal_places=2)

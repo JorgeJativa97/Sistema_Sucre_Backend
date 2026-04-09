@@ -1657,3 +1657,157 @@ ValueError: Exception information must include the exception type
 2026-04-07 14:45:03 | INFO | api | Iniciando generación de reporte de recaudación por rubro: 2026-03-01 → 2026-03-31
 2026-04-07 14:45:05 | INFO | api | Reporte de recaudación por rubro generado exitosamente: recaudacion_rubro_2026-03-01_2026-03-31.json
 2026-04-07 14:45:07 | INFO | api | RecaudacionRubroDatosAPIView - Archivo servido: recaudacion_rubro_2026-03-01_2026-03-31.json (57 registros)
+2026-04-09 12:21:35 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2025 → 2025-01-01 → 2025-01-31
+2026-04-09 12:21:35 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2025-01-31 → 2025 → 2025-01-01
+2026-04-09 12:21:35 | ERROR | api | Error generando reporte de recaudación por rubro por anio de emision: unsupported format character 'N' (0x4e) at index 190
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\task\tasks.py", line 595, in generar_reporte_recaudacion_rubro_anio_emi
+    cursor.execute(_SQL_RECAUDACION_RUBRO_ANIO_EMI, {
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 520, in execute
+    query, params = self._fix_for_params(query, params, unify_by_values=True)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 497, in _fix_for_params
+    query = query % args
+ValueError: unsupported format character 'N' (0x4e) at index 190
+2026-04-09 12:22:01 | ERROR | api | TaskStatusAPIView - Error inesperado: Exception information must include the exception type
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 453, in exception_to_python
+    exc_type = exc['exc_type']
+KeyError: 'exc_type'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\base.py", line 67, in get
+    state = task_result.state
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 505, in state
+    return self._get_task_meta()['status']
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 444, in _get_task_meta
+    return self._maybe_set_cache(self.backend.get_task_meta(self.id))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 707, in get_task_meta
+    meta = self._get_task_meta_for(task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 1099, in _get_task_meta_for
+    return self.decode_result(meta)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 524, in decode_result
+    return self.meta_from_decoded(self.decode(payload))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 520, in meta_from_decoded
+    meta['result'] = self.exception_to_python(meta['result'])
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 455, in exception_to_python
+    raise ValueError("Exception information must include "
+ValueError: Exception information must include the exception type
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 453, in exception_to_python
+    exc_type = exc['exc_type']
+KeyError: 'exc_type'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\base.py", line 67, in get
+    state = task_result.state
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 505, in state
+    return self._get_task_meta()['status']
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 444, in _get_task_meta
+    return self._maybe_set_cache(self.backend.get_task_meta(self.id))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 707, in get_task_meta
+    meta = self._get_task_meta_for(task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 1099, in _get_task_meta_for
+    return self.decode_result(meta)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 524, in decode_result
+    return self.meta_from_decoded(self.decode(payload))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 520, in meta_from_decoded
+    meta['result'] = self.exception_to_python(meta['result'])
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 455, in exception_to_python
+    raise ValueError("Exception information must include "
+ValueError: Exception information must include the exception type
+2026-04-09 12:22:05 | ERROR | api | TaskStatusAPIView - Error inesperado: Exception information must include the exception type
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 453, in exception_to_python
+    exc_type = exc['exc_type']
+KeyError: 'exc_type'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\base.py", line 67, in get
+    state = task_result.state
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 505, in state
+    return self._get_task_meta()['status']
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 444, in _get_task_meta
+    return self._maybe_set_cache(self.backend.get_task_meta(self.id))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 707, in get_task_meta
+    meta = self._get_task_meta_for(task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 1099, in _get_task_meta_for
+    return self.decode_result(meta)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 524, in decode_result
+    return self.meta_from_decoded(self.decode(payload))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 520, in meta_from_decoded
+    meta['result'] = self.exception_to_python(meta['result'])
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 455, in exception_to_python
+    raise ValueError("Exception information must include "
+ValueError: Exception information must include the exception type
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 453, in exception_to_python
+    exc_type = exc['exc_type']
+KeyError: 'exc_type'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\base.py", line 67, in get
+    state = task_result.state
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 505, in state
+    return self._get_task_meta()['status']
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 444, in _get_task_meta
+    return self._maybe_set_cache(self.backend.get_task_meta(self.id))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 707, in get_task_meta
+    meta = self._get_task_meta_for(task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 1099, in _get_task_meta_for
+    return self.decode_result(meta)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 524, in decode_result
+    return self.meta_from_decoded(self.decode(payload))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 520, in meta_from_decoded
+    meta['result'] = self.exception_to_python(meta['result'])
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 455, in exception_to_python
+    raise ValueError("Exception information must include "
+ValueError: Exception information must include the exception type
+2026-04-09 12:24:33 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2025 → 2025-01-01 → 2025-01-31
+2026-04-09 12:24:33 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2025 → 2025-01-01 → 2025-01-31
+2026-04-09 12:24:34 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2025_2025-01-01_2025-01-31.json
+2026-04-09 12:25:57 | INFO | api | RecaudacionRubroAnioEmiDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_2025_2025-01-01_2025-01-31.json (49 registros)
+2026-04-09 12:37:30 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:37:30 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:37:31 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2026_2026-03-01_2026-03-31.json
+2026-04-09 12:37:40 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:37:40 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:37:41 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2026_2026-03-01_2026-03-31.json
+2026-04-09 12:39:28 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:39:28 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:39:29 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2026_2026-03-01_2026-03-31.json
+2026-04-09 12:39:45 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:39:45 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:39:46 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2026_2026-03-01_2026-03-31.json
+2026-04-09 12:41:09 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:41:09 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:41:10 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2026_2026-03-01_2026-03-31.json
+2026-04-09 12:41:48 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:41:48 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:41:49 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2026_2026-03-01_2026-03-31.json
+2026-04-09 12:43:03 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:43:03 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2026 → 2026-03-01 → 2026-03-31
+2026-04-09 12:43:04 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2026_2026-03-01_2026-03-31.json
+2026-04-09 12:43:25 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2026 → 2025-01-01 → 2025-01-31
+2026-04-09 12:43:25 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2026 → 2025-01-01 → 2025-01-31
+2026-04-09 12:43:25 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2026_2025-01-01_2025-01-31.json
+2026-04-09 12:47:32 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2026 → 2025-01-01 → 2025-01-31
+2026-04-09 12:47:32 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2026 → 2025-01-01 → 2025-01-31
+2026-04-09 12:47:32 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2026_2025-01-01_2025-01-31.json
+2026-04-09 12:50:09 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2025 → 2025-01-01 → 2025-01-31
+2026-04-09 12:50:09 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2025 → 2025-01-01 → 2025-01-31
+2026-04-09 12:50:10 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2025_2025-01-01_2025-01-31.json
+2026-04-09 12:50:11 | INFO | api | RecaudacionRubroAnioEmiDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_2025_2025-01-01_2025-01-31.json (49 registros)
