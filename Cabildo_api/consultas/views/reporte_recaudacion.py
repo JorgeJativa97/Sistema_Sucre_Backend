@@ -7,7 +7,12 @@ from rest_framework import status
 from django.conf import settings
 
 from Cabildo_api.consultas.views.base import BaseAPIView
-from Cabildo_api.task.tasks import generar_reporte_recaudacion, generar_reporte_recaudacion_rubro, generar_reporte_recaudacion_rubro_anio_emi
+from Cabildo_api.task.tasks import (
+    generar_reporte_recaudacion,
+    generar_reporte_recaudacion_rubro,
+    generar_reporte_recaudacion_rubro_anio_emi,
+    generar_reporte_recaudacion_rubro_anio_emi_ids,
+)
 import logging
 
 logger = logging.getLogger('api')
@@ -298,3 +303,165 @@ class RecaudacionRubroAnioEmiDatosAPIView(BaseRecaudacionAPIView):
                 fecha_inicio=fecha_inicio,
                 fecha_fin=fecha_fin,
             )
+
+
+class RecaudacionRubroAnioEmiIdsApiView(BaseRecaudacionAPIView):
+    """
+    Endpoint: GET /api/recaudacion_rubro_anio_emi_ids/
+    Inicia la generación asíncrona del reporte de recaudación por rubro por año de
+    emisión filtrando por una lista de hasta 4 ids de rubro (EMI04CODI).
+    Responde con HTTP 202 (Accepted) con un task_id.
+
+    Query params requeridos:
+        year          — año de emisión (ej: 2026)
+        fecha_inicio  — fecha inicial en formato YYYY-MM-DD
+        fecha_fin     — fecha final en formato YYYY-MM-DD
+        emi04codi     — lista de ids separados por coma (máximo 4), ej: 138,1,108,133
+
+    Ejemplo:
+        GET /api/recaudacion_rubro_anio_emi_ids/?year=2026
+            &fecha_inicio=2026-01-01&fecha_fin=2026-03-24
+            &emi04codi=138,1,108,133
+    """
+
+    MAX_IDS = 4
+
+    def _get_emi04codi_ids(self, request):
+        raw = request.query_params.get('emi04codi')
+        if not raw:
+            raise ValueError("El parámetro 'emi04codi' es requerido (ej: 138,1,108,133)")
+
+        try:
+            ids = [int(x) for x in raw.split(',') if x.strip() != '']
+        except ValueError:
+            raise ValueError("'emi04codi' debe ser una lista de enteros separados por coma")
+
+        if not ids:
+            raise ValueError("Debe proporcionar al menos un id en 'emi04codi'")
+        if len(ids) > self.MAX_IDS:
+            raise ValueError(f"'emi04codi' admite un máximo de {self.MAX_IDS} ids")
+
+        return ids
+
+    def get(self, request, year=None):
+        try:
+            year = self._get_year(request, year)
+            fecha_inicio, fecha_fin = self._get_fechas(request)
+            emi04codi_ids = self._get_emi04codi_ids(request)
+
+            logger.info(
+                f"RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: "
+                f"{year} → {fecha_inicio} → {fecha_fin} → ids={emi04codi_ids}"
+            )
+
+            task = generar_reporte_recaudacion_rubro_anio_emi_ids.delay(
+                year, fecha_inicio, fecha_fin, emi04codi_ids
+            )
+
+            return Response({
+                'task_id': task.id,
+                'status':  'PENDING',
+                'message': (
+                    f'Generando reporte de recaudación por rubro del año {year} '
+                    f'desde {fecha_inicio} al {fecha_fin} para los rubros {emi04codi_ids}. '
+                    f'Use el task_id para consultar el estado.'
+                ),
+            }, status=status.HTTP_202_ACCEPTED)
+
+        except ValueError as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return self._handle_error(
+                e, 'RecaudacionRubroAnioEmiIdsApiView', request,
+                year=request.query_params.get('year'),
+                fecha_inicio=request.query_params.get('fecha_inicio'),
+                fecha_fin=request.query_params.get('fecha_fin'),
+                emi04codi=request.query_params.get('emi04codi'),
+            )
+
+
+class RecaudacionRubroAnioEmiIdsDatosAPIView(BaseRecaudacionAPIView):
+    """
+    Endpoint: GET /api/recaudacion_rubro_anio_emi_ids/datos/
+    Retorna el contenido del reporte JSON generado por la tarea Celery.
+
+    Query params requeridos:
+        year          — año de emisión (ej: 2026)
+        fecha_inicio  — fecha inicial en formato YYYY-MM-DD
+        fecha_fin     — fecha final en formato YYYY-MM-DD
+        emi04codi     — lista de ids separados por coma (máximo 4)
+    """
+
+    def get(self, request):
+        year         = request.query_params.get('year')
+        fecha_inicio = request.query_params.get('fecha_inicio')
+        fecha_fin    = request.query_params.get('fecha_fin')
+        emi04codi    = request.query_params.get('emi04codi')
+
+        if not year or not fecha_inicio or not fecha_fin or not emi04codi:
+            return Response(
+                {"detail": "Los parámetros 'year', 'fecha_inicio', 'fecha_fin' y 'emi04codi' son requeridos."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            try:
+                ids = [int(x) for x in emi04codi.split(',') if x.strip() != '']
+            except ValueError:
+                return Response(
+                    {"detail": "'emi04codi' debe ser una lista de enteros separados por coma"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            ids_str = '-'.join(str(i) for i in ids)
+            filename = f'recaudacion_rubro_anio_emi_ids_{year}_{fecha_inicio}_{fecha_fin}_{ids_str}.json'
+            filepath = os.path.join(settings.MEDIA_ROOT, 'reportes', filename)
+
+            if not os.path.exists(filepath):
+                logger.warning(f"RecaudacionRubroAnioEmiIdsDatosAPIView - Archivo no encontrado: {filepath}")
+                return Response(
+                    {"detail": f"No se encontró el reporte para {year}/{fecha_inicio}/{fecha_fin}/{ids}. Genérelo primero."},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            with open(filepath, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            logger.info(f"RecaudacionRubroAnioEmiIdsDatosAPIView - Archivo servido: {filename} ({len(data)} registros)")
+            return Response(data, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return self._handle_error(
+                e, 'RecaudacionRubroAnioEmiIdsDatosAPIView', request,
+                year=year,
+                fecha_inicio=fecha_inicio,
+                fecha_fin=fecha_fin,
+                emi04codi=emi04codi,
+            )
+
+
+_SQL_RUBROS = """
+SELECT EMI04CODI, EMI04DESD, EMI03DES
+FROM EMI04
+INNER JOIN EMI03 ON EMI03.EMI03CODI = EMI04.EMI03CODI
+WHERE EMI03BLOQ = 'N'
+AND emi03.emi03codi <> 99999
+ORDER BY EMI03DES, EMI04DESD
+"""
+
+
+class RubrosListAPIView(BaseAPIView):
+    """
+    Endpoint: GET /api/rubros/
+    Retorna el catálogo de rubros activos (EMI03BLOQ = 'N').
+
+    Respuesta: lista de objetos con EMI04CODI, EMI04DESD y EMI03DES.
+    """
+
+    def get(self, request):
+        try:
+            data = self._fetch_query(_SQL_RUBROS)
+            logger.info(f"RubrosListAPIView - {len(data)} rubros retornados")
+            return Response(data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return self._handle_error(e, 'RubrosListAPIView', request)

@@ -21,6 +21,9 @@ from Cabildo_api.consultas.views.reporte_recaudacion import (
     RecaudacionRubroDatosAPIView,
     RecaudacionRubroAnioEmiApiView,
     RecaudacionRubroAnioEmiDatosAPIView,
+    RecaudacionRubroAnioEmiIdsApiView,
+    RecaudacionRubroAnioEmiIdsDatosAPIView,
+    RubrosListAPIView,
 )
 
 urlpatterns = [
@@ -53,5 +56,10 @@ urlpatterns = [
       # Reporte de recaudacion por año de emision
     path('api/recaudacion_rubro_anioemi/', RecaudacionRubroAnioEmiApiView.as_view(), name='recaudacion_rubro_anioemi'),
     path('api/recaudacion_rubro_anio_emi/datos/', RecaudacionRubroAnioEmiDatosAPIView.as_view(), name='recaudacion_rubro_anio_emi_datos'),
+    # Reporte de recaudacion por año de emision filtrado por ids de rubro (máx 4)
+    path('api/recaudacion_rubro_anio_emi_ids/', RecaudacionRubroAnioEmiIdsApiView.as_view(), name='recaudacion_rubro_anio_emi_ids'),
+    path('api/recaudacion_rubro_anio_emi_ids/datos/', RecaudacionRubroAnioEmiIdsDatosAPIView.as_view(), name='recaudacion_rubro_anio_emi_ids_datos'),
+    # Catálogo de rubros
+    path('api/rubros/', RubrosListAPIView.as_view(), name='rubros_list'),
 ]
 

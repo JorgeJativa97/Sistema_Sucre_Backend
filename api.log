@@ -1811,3 +1811,54 @@ ValueError: Exception information must include the exception type
 2026-04-09 12:50:09 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2025 → 2025-01-01 → 2025-01-31
 2026-04-09 12:50:10 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2025_2025-01-01_2025-01-31.json
 2026-04-09 12:50:11 | INFO | api | RecaudacionRubroAnioEmiDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_2025_2025-01-01_2025-01-31.json (49 registros)
+2026-04-13 16:40:23 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-13 16:40:23 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-13 16:40:52 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2025 → 2026-03-01 → 2026-03-31
+2026-04-13 16:40:52 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2025 → 2026-03-01 → 2026-03-31
+2026-04-13 16:40:53 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2025_2026-03-01_2026-03-31.json
+2026-04-13 16:40:54 | INFO | api | RecaudacionRubroAnioEmiDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_2025_2026-03-01_2026-03-31.json (17 registros)
+2026-04-13 16:41:14 | INFO | api | RecaudacionRubAnioEmisionroApiView - Consulta iniciada:2025 → 2026-01-01 → 2026-01-31
+2026-04-13 16:41:14 | INFO | api | Iniciando generación de reporte de recaudación por rubro POR ANIO DE EMISION:2025 → 2026-01-01 → 2026-01-31
+2026-04-13 16:41:15 | INFO | api | Reporte de recaudación por rubro por año de emisión generado exitosamente: recaudacion_rubro_anio_emi_2025_2026-01-01_2026-01-31.json
+2026-04-13 16:41:16 | INFO | api | RecaudacionRubroAnioEmiDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_2025_2026-01-01_2026-01-31.json (25 registros)
+2026-04-13 16:41:20 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-13 16:41:20 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-13 16:42:48 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-13 16:46:20 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-13 16:46:20 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-13 16:57:26 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-13 16:57:26 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-13 16:57:47 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2024 → 2026-03-01 → 2026-03-31 → ids=[196, 195, 371, 370]
+2026-04-13 16:57:47 | INFO | api | Iniciando generación de reporte de recaudación por rubro/anio emision/ids: 2024 → 2026-03-01 → 2026-03-31 → ids=[196, 195, 371, 370]
+2026-04-13 16:57:48 | INFO | api | Reporte de recaudación por rubro/anio emision/ids generado: recaudacion_rubro_anio_emi_ids_2024_2026-03-01_2026-03-31_196-195-371-370.json
+2026-04-13 16:57:48 | INFO | api | RecaudacionRubroAnioEmiIdsDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_ids_2024_2026-03-01_2026-03-31_196-195-371-370.json (0 registros)
+2026-04-13 16:57:55 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2024 → 2026-03-01 → 2026-03-31 → ids=[196, 195, 371, 370]
+2026-04-13 16:57:55 | INFO | api | Iniciando generación de reporte de recaudación por rubro/anio emision/ids: 2024 → 2026-03-01 → 2026-03-31 → ids=[196, 195, 371, 370]
+2026-04-13 16:57:55 | INFO | api | Reporte de recaudación por rubro/anio emision/ids generado: recaudacion_rubro_anio_emi_ids_2024_2026-03-01_2026-03-31_196-195-371-370.json
+2026-04-13 16:57:55 | INFO | api | RecaudacionRubroAnioEmiIdsDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_ids_2024_2026-03-01_2026-03-31_196-195-371-370.json (0 registros)
+2026-04-13 17:00:39 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2024 → 2026-03-01 → 2026-03-31 → ids=[196, 195, 371, 370]
+2026-04-13 17:00:39 | INFO | api | Iniciando generación de reporte de recaudación por rubro/anio emision/ids: 2024 → 2026-03-01 → 2026-03-31 → ids=[196, 195, 371, 370]
+2026-04-13 17:00:39 | INFO | api | Reporte de recaudación por rubro/anio emision/ids generado: recaudacion_rubro_anio_emi_ids_2024_2026-03-01_2026-03-31_196-195-371-370.json
+2026-04-13 17:00:39 | INFO | api | RecaudacionRubroAnioEmiIdsDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_ids_2024_2026-03-01_2026-03-31_196-195-371-370.json (0 registros)
+2026-04-14 09:19:02 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2025 → 2026-03-01 → 2026-03-31 → ids=[196, 195, 371, 370]
+2026-04-14 09:19:02 | INFO | api | Iniciando generación de reporte de recaudación por rubro/anio emision/ids: 2025 → 2026-03-01 → 2026-03-31 → ids=[196, 195, 371, 370]
+2026-04-14 09:19:03 | INFO | api | Reporte de recaudación por rubro/anio emision/ids generado: recaudacion_rubro_anio_emi_ids_2025_2026-03-01_2026-03-31_196-195-371-370.json
+2026-04-14 09:19:03 | INFO | api | RecaudacionRubroAnioEmiIdsDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_ids_2025_2026-03-01_2026-03-31_196-195-371-370.json (0 registros)
+2026-04-14 09:19:21 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2025 → 2026-01-01 → 2026-01-31 → ids=[196, 195, 371, 370]
+2026-04-14 09:19:21 | INFO | api | Iniciando generación de reporte de recaudación por rubro/anio emision/ids: 2025 → 2026-01-01 → 2026-01-31 → ids=[196, 195, 371, 370]
+2026-04-14 09:19:21 | INFO | api | Reporte de recaudación por rubro/anio emision/ids generado: recaudacion_rubro_anio_emi_ids_2025_2026-01-01_2026-01-31_196-195-371-370.json
+2026-04-14 09:19:22 | INFO | api | RecaudacionRubroAnioEmiIdsDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_ids_2025_2026-01-01_2026-01-31_196-195-371-370.json (0 registros)
+2026-04-14 09:20:38 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2025 → 2026-01-01 → 2026-01-31 → ids=[2860, 10, 135, 6]
+2026-04-14 09:20:38 | INFO | api | Iniciando generación de reporte de recaudación por rubro/anio emision/ids: 2025 → 2026-01-01 → 2026-01-31 → ids=[2860, 10, 135, 6]
+2026-04-14 09:20:39 | INFO | api | Reporte de recaudación por rubro/anio emision/ids generado: recaudacion_rubro_anio_emi_ids_2025_2026-01-01_2026-01-31_2860-10-135-6.json
+2026-04-14 09:20:40 | INFO | api | RecaudacionRubroAnioEmiIdsDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_ids_2025_2026-01-01_2026-01-31_2860-10-135-6.json (1 registros)
+2026-04-14 10:13:03 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2026 → 2026-01-01 → 2026-01-31 → ids=[135, 6]
+2026-04-14 10:13:03 | INFO | api | Iniciando generación de reporte de recaudación por rubro/anio emision/ids: 2026 → 2026-01-01 → 2026-01-31 → ids=[135, 6]
+2026-04-14 10:13:04 | INFO | api | Reporte de recaudación por rubro/anio emision/ids generado: recaudacion_rubro_anio_emi_ids_2026_2026-01-01_2026-01-31_135-6.json
+2026-04-14 10:13:05 | INFO | api | RecaudacionRubroAnioEmiIdsDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_ids_2026_2026-01-01_2026-01-31_135-6.json (1 registros)
+2026-04-14 10:16:34 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-14 10:16:34 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-14 10:16:52 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-14 10:16:52 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-14 10:20:42 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-14 10:20:42 | INFO | api | RubrosListAPIView - 359 rubros retornados

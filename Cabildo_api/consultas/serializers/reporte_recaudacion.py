@@ -34,3 +34,5 @@ class RecaudacionImpuestoRubroAnio(serializers.Serializer):
     """
     RUBRO = serializers.CharField(allow_null=True)
     TOTAL = serializers.DecimalField(max_digits=30, decimal_places=2)
+
+
