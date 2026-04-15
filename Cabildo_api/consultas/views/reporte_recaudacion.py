@@ -17,6 +17,15 @@ import logging
 
 logger = logging.getLogger('api')
 
+_SQL_RUBROS = """
+SELECT EMI04CODI, EMI04DESD, EMI03DES
+FROM EMI04
+INNER JOIN EMI03 ON EMI03.EMI03CODI = EMI04.EMI03CODI
+WHERE EMI03BLOQ = 'N'
+AND emi03.emi03codi <> 99999
+ORDER BY EMI03DES, EMI04DESD
+"""
+
 
 class BaseRecaudacionAPIView(BaseAPIView):
     """
@@ -439,15 +448,6 @@ class RecaudacionRubroAnioEmiIdsDatosAPIView(BaseRecaudacionAPIView):
                 emi04codi=emi04codi,
             )
 
-
-_SQL_RUBROS = """
-SELECT EMI04CODI, EMI04DESD, EMI03DES
-FROM EMI04
-INNER JOIN EMI03 ON EMI03.EMI03CODI = EMI04.EMI03CODI
-WHERE EMI03BLOQ = 'N'
-AND emi03.emi03codi <> 99999
-ORDER BY EMI03DES, EMI04DESD
-"""
 
 
 class RubrosListAPIView(BaseAPIView):
