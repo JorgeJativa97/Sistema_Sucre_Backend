@@ -27,6 +27,12 @@ AND emi03.emi03codi <> 99999
 ORDER BY EMI03DES, EMI04DESD
 """
 
+_SQL_impuesto = """
+SELECT * FROM EMI03 WHERE EMI03BLOQ = 'N' 
+AND emi03.emi03codi <> 99999 
+ORDER BY 1 DESC
+"""
+
 
 class BaseRecaudacionAPIView(BaseAPIView):
     """
@@ -589,7 +595,7 @@ class ImpuestoListAPIView(BaseAPIView):
     Endpoint: GET /api/impuesto/
     Retorna el catálogo de impuesto activos (EMI03BLOQ = 'N').
 
-    Respuesta: lista de objetos con EMI04CODI, EMI04DESD y EMI03DES.
+    Respuesta: lista de objetos con EMI03DES.
     """
 
     def get(self, request):

@@ -65,5 +65,7 @@ urlpatterns = [
      path('api/recaudacion_impuesto_filtro_emi_ids/datos',RecaudacionImpuestoFiltradoDatosAPIView.as_view(), name='generar_reporte_recaudacion_impuesto_emi_ids_datos')
     # Catálogo de rubros
     path('api/rubros/', RubrosListAPIView.as_view(), name='rubros_list'),
+    # Catálogo de IMPUESTO
+    path('api/impuesto/', ImpuestoListAPIView.as_view(), name='impuesto_list'),
 ]
 
