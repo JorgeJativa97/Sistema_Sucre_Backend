@@ -9,6 +9,7 @@ from django.conf import settings
 from Cabildo_api.consultas.views.base import BaseAPIView
 from Cabildo_api.task.tasks import (
     generar_reporte_recaudacion,
+    generar_reporte_recaudacion_impuesto_emi_ids,
     generar_reporte_recaudacion_rubro,
     generar_reporte_recaudacion_rubro_anio_emi,
     generar_reporte_recaudacion_rubro_anio_emi_ids,
@@ -465,3 +466,136 @@ class RubrosListAPIView(BaseAPIView):
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             return self._handle_error(e, 'RubrosListAPIView', request)
+        
+
+class RecaudacionImpuestoFiltradoAPIView(BaseAPIView):
+    """
+    Endpoint: GET /api/recaudacion_impuesto/
+    Inicia la generación asíncrona del reporte de recaudación por impuesto filtrado por impuesto.
+    Responde con HTTP 202 (Accepted) inmediatamente con un task_id.
+
+    Query params requeridos:
+        fecha_inicio  — fecha inicial en formato YYYY-MM-DD
+        fecha_fin     — fecha final   en formato YYYY-MM-DD
+        emi03codi     — lista de ids separados por coma (máximo 4)
+
+    Ejemplo: GET /api/recaudacion_impuesto_filtro/?fecha_inicio=2025-01-01&fecha_fin=2025-12-31&emi03codi=138,1,108,133
+    """
+    MAX_IDS = 4
+
+    def _get_emi03codi_ids(self, request):
+        raw = request.query_params.get('emi03codi')
+        if not raw:
+            raise ValueError("El parámetro 'emi03codi' es requerido (ej: 138,1,108,133)")
+
+        try:
+            ids = [int(x) for x in raw.split(',') if x.strip() != '']
+        except ValueError:
+            raise ValueError("'emi03codi' debe ser una lista de enteros separados por coma")
+
+        if not ids:
+            raise ValueError("Debe proporcionar al menos un id en 'emi03codi'")
+        if len(ids) > self.MAX_IDS:
+            raise ValueError(f"'emi03codi' admite un máximo de {self.MAX_IDS} ids")
+
+        return ids
+
+    def get(self, request):
+        try:
+            fecha_inicio, fecha_fin = self._get_fechas(request)
+            emi03codi_ids = self._get_emi03codi_ids(request)
+
+            logger.info(
+                f"RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: "
+                f"{fecha_inicio} → {fecha_fin} → ids={emi03codi_ids}"
+            )
+
+            task = generar_reporte_recaudacion_impuesto_emi_ids.delay(
+                fecha_inicio, fecha_fin, emi03codi_ids
+            )
+
+            return Response({
+                'task_id': task.id,
+                'status':  'PENDING',
+                'message': (
+                    f'Generando reporte de recaudación filtrado por impuesto '
+                    f'desde {fecha_inicio} al {fecha_fin} para los impuestos {emi03codi_ids}. '
+                    f'Use el task_id para consultar el estado.'
+                ),
+            }, status=status.HTTP_202_ACCEPTED)
+
+        except ValueError as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return self._handle_error(
+                e, 'RecaudacionImpuestoFiltradoAPIView', request,
+                fecha_inicio=request.query_params.get('fecha_inicio'),
+                fecha_fin=request.query_params.get('fecha_fin'),
+                emi04codi=request.query_params.get('emi04codi'),
+            )
+
+class RecaudacionImpuestoFiltradoDatosAPIView(BaseRecaudacionAPIView):
+    """
+    Endpoint: GET /api/recaudacion_impuesto_ids/datos/
+    Retorna el contenido del reporte JSON generado por la tarea Celery.
+
+    Query params requeridos:
+        fecha_inicio  — fecha inicial en formato YYYY-MM-DD
+        fecha_fin     — fecha final en formato YYYY-MM-DD
+        emi03codi     — lista de ids separados por coma (máximo 4)
+    """
+
+    def get(self, request):
+        fecha_inicio = request.query_params.get('fecha_inicio')
+        fecha_fin    = request.query_params.get('fecha_fin')
+        emi03codi    = request.query_params.get('emi03codi')
+
+        try:
+            try:
+                ids = [int(x) for x in emi03codi.split(',') if x.strip() != '']
+            except ValueError:
+                return Response(
+                    {"detail": "'emi03codi' debe ser una lista de enteros separados por coma"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            ids_str = '-'.join(str(i) for i in ids)
+            filename = f'recaudacion_impuesto_emi_ids_{fecha_inicio}_{fecha_fin}_{ids_str}.json'
+            filepath = os.path.join(settings.MEDIA_ROOT, 'reportes', filename)
+
+            if not os.path.exists(filepath):
+                logger.warning(f"RecaudacionImpuestoFiltradoDatosAPIView - Archivo no encontrado: {filepath}")
+                return Response(
+                    {"detail": f"No se encontró el reporte para {fecha_inicio}/{fecha_fin}/{ids}. Genérelo primero."},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            with open(filepath, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            logger.info(f"RecaudacionImpuestoFiltradoDatosAPIView - Archivo servido: {filename} ({len(data)} registros)")
+            return Response(data, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return self._handle_error(
+                e, 'RecaudacionImpuestoFiltradoDatosAPIView', request,
+                fecha_inicio=fecha_inicio,
+                fecha_fin=fecha_fin,
+                emi03codi=emi03codi,
+            )
+        
+class ImpuestoListAPIView(BaseAPIView):
+    """
+    Endpoint: GET /api/impuesto/
+    Retorna el catálogo de impuesto activos (EMI03BLOQ = 'N').
+
+    Respuesta: lista de objetos con EMI04CODI, EMI04DESD y EMI03DES.
+    """
+
+    def get(self, request):
+        try:
+            data = self._fetch_query(_SQL_impuesto)
+            logger.info(f"impuestoListAPIView - {len(data)} impuesto retornados")
+            return Response(data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return self._handle_error(e, 'impuestoListAPIView', request)

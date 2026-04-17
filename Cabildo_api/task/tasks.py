@@ -719,3 +719,93 @@ def generar_reporte_recaudacion_rubro_anio_emi_ids(self, year, fecha_inicio, fec
         )
         self.update_state(state='FAILURE', meta={'error': str(e)})
         raise
+
+_SQL_RECAUDACION_IMPUESTO_EMI_IDS = """
+SELECT 
+    pk_uti.FIND_IMPUESTO(impuesto) impuesto,
+    SUM(total)        emisiontitulo,
+    SUM(interes)      interes,
+    SUM(coactiva)     coactiva,
+    SUM(descuento)    descuento,
+    SUM(recargo)      recargo,
+    SUM(iva)          iva,
+    SUM(nro_titulos)  nro_titulos,
+    SUM(total) + SUM(interes) + SUM(coactiva) + SUM(recargo) 
+        - SUM(descuento) + SUM(NVL(IVA, 0)) total
+FROM V_COBROMAES
+WHERE fpago    BETWEEN TO_DATE(:fecha_inicio, 'YYYY-MM-DD') AND TO_DATE(:fecha_fin, 'YYYY-MM-DD')
+  AND impuesto IN ({placeholders})
+GROUP BY pk_uti.FIND_IMPUESTO(impuesto)
+ORDER BY 1;
+"""
+
+@shared_task(bind=True, name='generar_reporte_recaudacion_impuesto_emi_ids')
+def generar_reporte_recaudacion_impuesto_emi_ids(self, fecha_inicio, fecha_fin, emi03codi_ids):
+    """
+    Tarea asíncrona para generar reporte de recaudación por rubro por año de emisión
+    filtrando por una lista de hasta 4 ids de rubro (EMI04CODI).
+    year: int en formato 'YYYY'
+    fecha_inicio / fecha_fin: strings en formato 'YYYY-MM-DD'.
+    emi03codi_ids: lista de enteros (máximo 4).
+    """
+    try:
+        self.update_state(state='PROCESSING', meta={'progress': 10, 'status': 'Consultando datos...'})
+
+        logger.info(
+            f"Iniciando generación de reporte de recaudación por impuesto/ids: "
+            f"{fecha_inicio} → {fecha_fin} → ids={emi03codi_ids}"
+        )
+
+        placeholders = ','.join(f':id{i}' for i in range(len(emi03codi_ids)))
+        sql = _SQL_RECAUDACION_IMPUESTO_EMI_IDS.format(placeholders=placeholders)
+
+        params = {
+            'fecha_inicio': fecha_inicio,
+            'fecha_fin':    fecha_fin,
+        }
+        for i, rubro_id in enumerate(emi03codi_ids):
+            params[f'id{i}'] = rubro_id
+
+        with connection.cursor() as cursor:
+            cursor.execute(sql, params)
+            cols = [c[0] for c in cursor.description]
+            rows = cursor.fetchall()
+
+        self.update_state(state='PROCESSING', meta={'progress': 50, 'status': 'Procesando datos...'})
+
+        data = [
+            {col: (float(val) if isinstance(val, Decimal) else val)
+             for col, val in zip(cols, row)}
+            for row in rows
+        ]
+
+        self.update_state(state='PROCESSING', meta={'progress': 80, 'status': 'Guardando reporte...'})
+
+        media_dir = os.path.join(settings.MEDIA_ROOT, 'reportes')
+        os.makedirs(media_dir, exist_ok=True)
+
+        ids_str = '-'.join(str(i) for i in emi03codi_ids)
+        filename = f'recaudacion_impuesto_emi_ids_{fecha_inicio}_{fecha_fin}_{ids_str}.json'
+        filepath = os.path.join(media_dir, filename)
+
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+
+        logger.info(f"Reporte de recaudación por rubro/impuesto/ids generado: {filename}")
+
+        return {
+            'status':        'SUCCESS',
+            'fecha_inicio':  fecha_inicio,
+            'fecha_fin':     fecha_fin,
+            'emi03codi_ids': emi03codi_ids,
+            'records':       len(data),
+            'file':          f'/media/reportes/{filename}',
+        }
+
+    except Exception as e:
+        logger.error(
+            f"Error generando reporte de recaudación por impuesto/ emision/ids: {str(e)}",
+            exc_info=True,
+        )
+        self.update_state(state='FAILURE', meta={'error': str(e)})
+        raise
