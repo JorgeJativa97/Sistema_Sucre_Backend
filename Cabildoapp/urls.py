@@ -64,7 +64,7 @@ urlpatterns = [
     path('api/recaudacion_rubro_anio_emi_ids/datos/', RecaudacionRubroAnioEmiIdsDatosAPIView.as_view(), name='recaudacion_rubro_anio_emi_ids_datos'),
      # Reporte de recaudacion por año de emision filtrado por ids de rubro (máx 4)
      path('api/recaudacion_impuesto_filtro_emi_ids/',RecaudacionImpuestoFiltradoAPIView.as_view(), name='generar_reporte_recaudacion_impuesto_emi_ids'),
-     path('api/recaudacion_impuesto_filtro_emi_ids/datos',RecaudacionImpuestoFiltradoDatosAPIView.as_view(), name='generar_reporte_recaudacion_impuesto_emi_ids_datos'),
+     path('api/recaudacion_impuesto_filtro_emi_ids/datos/',RecaudacionImpuestoFiltradoDatosAPIView.as_view(), name='generar_reporte_recaudacion_impuesto_emi_ids_datos'),
     # Catálogo de rubros
     path('api/rubros/', RubrosListAPIView.as_view(), name='rubros_list'),
     # Catálogo de IMPUESTO

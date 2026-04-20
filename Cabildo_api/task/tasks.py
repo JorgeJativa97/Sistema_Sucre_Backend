@@ -736,7 +736,7 @@ FROM V_COBROMAES
 WHERE fpago    BETWEEN TO_DATE(:fecha_inicio, 'YYYY-MM-DD') AND TO_DATE(:fecha_fin, 'YYYY-MM-DD')
   AND impuesto IN ({placeholders})
 GROUP BY pk_uti.FIND_IMPUESTO(impuesto)
-ORDER BY 1;
+ORDER BY 1
 """
 
 @shared_task(bind=True, name='generar_reporte_recaudacion_impuesto_emi_ids')

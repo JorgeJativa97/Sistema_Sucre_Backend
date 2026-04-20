@@ -474,7 +474,7 @@ class RubrosListAPIView(BaseAPIView):
             return self._handle_error(e, 'RubrosListAPIView', request)
         
 
-class RecaudacionImpuestoFiltradoAPIView(BaseAPIView):
+class RecaudacionImpuestoFiltradoAPIView(BaseRecaudacionAPIView):
     """
     Endpoint: GET /api/recaudacion_impuesto/
     Inicia la generación asíncrona del reporte de recaudación por impuesto filtrado por impuesto.
@@ -537,7 +537,7 @@ class RecaudacionImpuestoFiltradoAPIView(BaseAPIView):
                 e, 'RecaudacionImpuestoFiltradoAPIView', request,
                 fecha_inicio=request.query_params.get('fecha_inicio'),
                 fecha_fin=request.query_params.get('fecha_fin'),
-                emi04codi=request.query_params.get('emi04codi'),
+                emi03codi=request.query_params.get('emi03codi'),
             )
 
 class RecaudacionImpuestoFiltradoDatosAPIView(BaseRecaudacionAPIView):

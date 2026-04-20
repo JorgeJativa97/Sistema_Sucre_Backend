@@ -1862,3 +1862,157 @@ ValueError: Exception information must include the exception type
 2026-04-14 10:16:52 | INFO | api | RubrosListAPIView - 359 rubros retornados
 2026-04-14 10:20:42 | INFO | api | RubrosListAPIView - 359 rubros retornados
 2026-04-14 10:20:42 | INFO | api | RubrosListAPIView - 359 rubros retornados
+2026-04-20 10:43:48 | INFO | api | RecaudacionRubroAnioEmiDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_2025_2025-01-01_2025-01-31.json (49 registros)
+2026-04-20 10:45:18 | INFO | api | RecaudacionRubroAnioEmiDatosAPIView - Archivo servido: recaudacion_rubro_anio_emi_2025_2025-01-01_2025-01-31.json (49 registros)
+2026-04-20 10:46:40 | ERROR | api | RecaudacionImpuestoFiltradoAPIView - Error inesperado: 'RecaudacionImpuestoFiltradoAPIView' object has no attribute '_get_fechas'
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\reporte_recaudacion.py", line 511, in get
+    fecha_inicio, fecha_fin = self._get_fechas(request)
+AttributeError: 'RecaudacionImpuestoFiltradoAPIView' object has no attribute '_get_fechas'
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\reporte_recaudacion.py", line 511, in get
+    fecha_inicio, fecha_fin = self._get_fechas(request)
+AttributeError: 'RecaudacionImpuestoFiltradoAPIView' object has no attribute '_get_fechas'
+2026-04-20 10:48:25 | ERROR | api | RecaudacionImpuestoFiltradoAPIView - Error inesperado: 'RecaudacionImpuestoFiltradoAPIView' object has no attribute '_get_fechas'
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\reporte_recaudacion.py", line 511, in get
+    fecha_inicio, fecha_fin = self._get_fechas(request)
+AttributeError: 'RecaudacionImpuestoFiltradoAPIView' object has no attribute '_get_fechas'
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\reporte_recaudacion.py", line 511, in get
+    fecha_inicio, fecha_fin = self._get_fechas(request)
+AttributeError: 'RecaudacionImpuestoFiltradoAPIView' object has no attribute '_get_fechas'
+2026-04-20 10:48:56 | ERROR | api | RecaudacionImpuestoFiltradoAPIView - Error inesperado: 'RecaudacionImpuestoFiltradoAPIView' object has no attribute '_get_fechas'
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\reporte_recaudacion.py", line 511, in get
+    fecha_inicio, fecha_fin = self._get_fechas(request)
+AttributeError: 'RecaudacionImpuestoFiltradoAPIView' object has no attribute '_get_fechas'
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\reporte_recaudacion.py", line 511, in get
+    fecha_inicio, fecha_fin = self._get_fechas(request)
+AttributeError: 'RecaudacionImpuestoFiltradoAPIView' object has no attribute '_get_fechas'
+2026-04-20 10:52:11 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2025-01-01 → 2025-01-31 → ids=[138, 1, 108, 133]
+2026-04-20 10:52:11 | INFO | api | Iniciando generación de reporte de recaudación por impuesto/ids: 2025-01-01 → 2025-01-31 → ids=[138, 1, 108, 133]
+2026-04-20 10:52:11 | ERROR | api | Error generando reporte de recaudación por impuesto/ emision/ids: ORA-00933: SQL command not properly ended
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 523, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+cx_Oracle.DatabaseError: ORA-00933: SQL command not properly ended
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\task\tasks.py", line 770, in generar_reporte_recaudacion_impuesto_emi_ids
+    cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 523, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+django.db.utils.DatabaseError: ORA-00933: SQL command not properly ended
+2026-04-20 10:55:40 | ERROR | api | TaskStatusAPIView - Error inesperado: Exception information must include the exception type
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 453, in exception_to_python
+    exc_type = exc['exc_type']
+KeyError: 'exc_type'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\base.py", line 67, in get
+    state = task_result.state
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 505, in state
+    return self._get_task_meta()['status']
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 444, in _get_task_meta
+    return self._maybe_set_cache(self.backend.get_task_meta(self.id))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 707, in get_task_meta
+    meta = self._get_task_meta_for(task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 1099, in _get_task_meta_for
+    return self.decode_result(meta)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 524, in decode_result
+    return self.meta_from_decoded(self.decode(payload))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 520, in meta_from_decoded
+    meta['result'] = self.exception_to_python(meta['result'])
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 455, in exception_to_python
+    raise ValueError("Exception information must include "
+ValueError: Exception information must include the exception type
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 453, in exception_to_python
+    exc_type = exc['exc_type']
+KeyError: 'exc_type'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\consultas\views\base.py", line 67, in get
+    state = task_result.state
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 505, in state
+    return self._get_task_meta()['status']
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\result.py", line 444, in _get_task_meta
+    return self._maybe_set_cache(self.backend.get_task_meta(self.id))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 707, in get_task_meta
+    meta = self._get_task_meta_for(task_id)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 1099, in _get_task_meta_for
+    return self.decode_result(meta)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 524, in decode_result
+    return self.meta_from_decoded(self.decode(payload))
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 520, in meta_from_decoded
+    meta['result'] = self.exception_to_python(meta['result'])
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\celery\backends\base.py", line 455, in exception_to_python
+    raise ValueError("Exception information must include "
+ValueError: Exception information must include the exception type
+2026-04-20 10:56:07 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2025-01-01 → 2025-01-31 → ids=[138, 1, 108, 133]
+2026-04-20 10:56:11 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2025-01-01 → 2025-01-31 → ids=[138, 1, 108, 133]
+2026-04-20 10:58:04 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2025-01-01 → 2025-01-31 → ids=[138, 1, 108, 133]
+2026-04-20 11:01:13 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2025-01-01 → 2025-01-31 → ids=[140, 95]
+2026-04-20 11:04:17 | WARNING | api | RecaudacionImpuestoFiltradoDatosAPIView - Archivo no encontrado: /app/media\reportes\recaudacion_impuesto_emi_ids_2025-01-01_2025-01-31_140-95.json
+2026-04-20 11:04:34 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2025-01-01 → 2025-01-31 → ids=[140, 95]
+2026-04-20 11:04:52 | WARNING | api | RecaudacionImpuestoFiltradoDatosAPIView - Archivo no encontrado: /app/media\reportes\recaudacion_impuesto_emi_ids_2025-01-01_2025-01-31_140-95.json
+2026-04-20 11:04:53 | WARNING | api | RecaudacionImpuestoFiltradoDatosAPIView - Archivo no encontrado: /app/media\reportes\recaudacion_impuesto_emi_ids_2025-01-01_2025-01-31_140-95.json
+2026-04-20 11:04:56 | WARNING | api | RecaudacionImpuestoFiltradoDatosAPIView - Archivo no encontrado: /app/media\reportes\recaudacion_impuesto_emi_ids_2025-01-01_2025-01-31_140-95.json
+2026-04-20 11:04:57 | WARNING | api | RecaudacionImpuestoFiltradoDatosAPIView - Archivo no encontrado: /app/media\reportes\recaudacion_impuesto_emi_ids_2025-01-01_2025-01-31_140-95.json
+2026-04-20 11:05:41 | INFO | api | Iniciando generación de reporte de recaudación por impuesto/ids: 2025-01-01 → 2025-01-31 → ids=[138, 1, 108, 133]
+2026-04-20 11:05:41 | ERROR | api | Error generando reporte de recaudación por impuesto/ emision/ids: ORA-00933: SQL command not properly ended
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 523, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+cx_Oracle.DatabaseError: ORA-00933: SQL command not properly ended
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\CODIGO PYTHON\CABILDO_API\Cabildoapp\Cabildo_api\task\tasks.py", line 770, in generar_reporte_recaudacion_impuesto_emi_ids
+    cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\CODIGO PYTHON\CABILDO_API\venv\lib\site-packages\django\db\backends\oracle\base.py", line 523, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+django.db.utils.DatabaseError: ORA-00933: SQL command not properly ended
+2026-04-20 11:07:16 | INFO | api | Iniciando generación de reporte de recaudación por impuesto/ids: 2025-01-01 → 2025-01-31 → ids=[138, 1, 108, 133]
+2026-04-20 11:07:16 | INFO | api | Reporte de recaudación por rubro/impuesto/ids generado: recaudacion_impuesto_emi_ids_2025-01-01_2025-01-31_138-1-108-133.json
+2026-04-20 11:07:16 | INFO | api | Iniciando generación de reporte de recaudación por impuesto/ids: 2025-01-01 → 2025-01-31 → ids=[138, 1, 108, 133]
+2026-04-20 11:07:16 | INFO | api | Reporte de recaudación por rubro/impuesto/ids generado: recaudacion_impuesto_emi_ids_2025-01-01_2025-01-31_138-1-108-133.json
+2026-04-20 11:07:16 | INFO | api | Iniciando generación de reporte de recaudación por impuesto/ids: 2025-01-01 → 2025-01-31 → ids=[140, 95]
+2026-04-20 11:07:17 | INFO | api | Reporte de recaudación por rubro/impuesto/ids generado: recaudacion_impuesto_emi_ids_2025-01-01_2025-01-31_140-95.json
+2026-04-20 11:07:17 | INFO | api | Iniciando generación de reporte de recaudación por impuesto/ids: 2025-01-01 → 2025-01-31 → ids=[140, 95]
+2026-04-20 11:07:17 | INFO | api | Reporte de recaudación por rubro/impuesto/ids generado: recaudacion_impuesto_emi_ids_2025-01-01_2025-01-31_140-95.json
+2026-04-20 11:07:22 | INFO | api | RecaudacionImpuestoFiltradoDatosAPIView - Archivo servido: recaudacion_impuesto_emi_ids_2025-01-01_2025-01-31_140-95.json (2 registros)

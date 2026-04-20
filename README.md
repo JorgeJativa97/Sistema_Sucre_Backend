@@ -135,18 +135,18 @@ Los reportes pesados (consultas Oracle que pueden tardar 30+ minutos) siguen un 
 **Ejemplo flujo completo con curl:**
 ```bash
 # 1. Iniciar reporte
-curl -H "x-api-key: ClaveSecreta123" \
-  "http://192.168.50.90:8000/api/recaudacion/?fecha_inicio=2025-01-01&fecha_fin=2025-12-31"
+curl -H "x-api-key: *******" \
+  "http://localhost:8000/api/recaudacion/?fecha_inicio=2025-01-01&fecha_fin=2025-12-31"
 # → {"task_id":"uuid...","status":"PENDING"}
 
 # 2. Consultar estado
-curl -H "x-api-key: ClaveSecreta123" \
-  "http://192.168.50.90:8000/api/status/uuid.../"
+curl -H "x-api-key: *******" \
+  "http://localhost:8000/api/status/uuid.../"
 # → {"status":"SUCCESS","records":71,...}
 
 # 3. Descargar datos
-curl -H "x-api-key: ClaveSecreta123" \
-  "http://192.168.50.90:8000/api/recaudacion/datos/?fecha_inicio=2025-01-01&fecha_fin=2025-12-31"
+curl -H "x-api-key: *******" \
+  "http://localhost:8000/api/recaudacion/datos/?fecha_inicio=2025-01-01&fecha_fin=2025-12-31"
 # → [{...registros...}]
 ```
 
@@ -194,7 +194,7 @@ Flower es la interfaz web para monitorear las tareas Celery en tiempo real.
 
 **Acceso:**
 ```
-http://192.168.50.90:5555
+http://localhost:5555
 ```
 
 Requiere usuario y contraseña configurados en el `.env`:
@@ -213,7 +213,7 @@ FLOWER_PASSWORD=<contraseña>
 | Broker | Estado de la cola en Redis |
 
 **Flujo típico de monitoreo:**
-1. Ingresar a `http://192.168.50.90:5555`
+1. Ingresar a `http://localhost:5555`
 2. Ir a la pestaña **Tasks**
 3. Buscar el `task_id` retornado por el endpoint
 4. Ver el estado, progreso y resultado de la tarea
@@ -264,13 +264,13 @@ python manage.py runserver
 
 ```bash
 # 1. Iniciar reporte
-curl -H "x-api-key: ClaveSecreta123" "http://localhost:8000/api/recaudacion/?fecha_inicio=2025-01-01&fecha_fin=2025-12-31"
+curl -H "x-api-key: *******" "http://localhost:8000/api/recaudacion/?fecha_inicio=2025-01-01&fecha_fin=2025-12-31"
 
 # 2. Consultar estado
-curl -H "x-api-key: ClaveSecreta123" "http://localhost:8000/api/status/<task_id>/"
+curl -H "x-api-key: *******" "http://localhost:8000/api/status/<task_id>/"
 
 # 3. Descargar datos
-curl -H "x-api-key: ClaveSecreta123" "http://localhost:8000/api/recaudacion/datos/?fecha_inicio=2025-01-01&fecha_fin=2025-12-31"
+curl -H "x-api-key: *******" "http://localhost:8000/api/recaudacion/datos/?fecha_inicio=2025-01-01&fecha_fin=2025-12-31"
 ```
 
 ### Nota sobre la URL de Redis
