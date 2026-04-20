@@ -1,4 +1,4 @@
-# Guía de Django REST Framework
+yuj9o=[¨P# Guía de Django REST Framework*/
 ### Desde lo básico hasta nivel avanzado — basada en el proyecto Cabildo API
 
 ---
