@@ -2016,3 +2016,25 @@ django.db.utils.DatabaseError: ORA-00933: SQL command not properly ended
 2026-04-20 11:07:17 | INFO | api | Iniciando generación de reporte de recaudación por impuesto/ids: 2025-01-01 → 2025-01-31 → ids=[140, 95]
 2026-04-20 11:07:17 | INFO | api | Reporte de recaudación por rubro/impuesto/ids generado: recaudacion_impuesto_emi_ids_2025-01-01_2025-01-31_140-95.json
 2026-04-20 11:07:22 | INFO | api | RecaudacionImpuestoFiltradoDatosAPIView - Archivo servido: recaudacion_impuesto_emi_ids_2025-01-01_2025-01-31_140-95.json (2 registros)
+2026-04-20 12:03:36 | INFO | api | impuestoListAPIView - 168 impuesto retornados
+2026-04-20 12:10:58 | INFO | api | impuestoListAPIView - 168 impuesto retornados
+2026-04-20 12:43:43 | INFO | api | impuestoListAPIView - 168 impuesto retornados
+2026-04-20 12:43:43 | INFO | api | impuestoListAPIView - 168 impuesto retornados
+2026-04-20 12:44:00 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2026-03-01 → 2026-03-30 → ids=[1028]
+2026-04-20 12:44:00 | INFO | api | Iniciando generación de reporte de recaudación por impuesto/ids: 2026-03-01 → 2026-03-30 → ids=[1028]
+2026-04-20 12:44:00 | INFO | api | Reporte de recaudación por rubro/impuesto/ids generado: recaudacion_impuesto_emi_ids_2026-03-01_2026-03-30_1028.json
+2026-04-20 12:44:00 | INFO | api | RecaudacionImpuestoFiltradoDatosAPIView - Archivo servido: recaudacion_impuesto_emi_ids_2026-03-01_2026-03-30_1028.json (1 registros)
+2026-04-20 12:45:50 | INFO | api | RubrosListAPIView - 361 rubros retornados
+2026-04-20 12:45:51 | INFO | api | RubrosListAPIView - 361 rubros retornados
+2026-04-20 12:45:55 | INFO | api | impuestoListAPIView - 168 impuesto retornados
+2026-04-20 12:45:55 | INFO | api | impuestoListAPIView - 168 impuesto retornados
+2026-04-20 12:50:38 | INFO | api | impuestoListAPIView - 168 impuesto retornados
+2026-04-20 12:50:39 | INFO | api | impuestoListAPIView - 168 impuesto retornados
+2026-04-20 12:50:48 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2026-03-01 → 2026-03-31 → ids=[430]
+2026-04-20 12:50:48 | INFO | api | Iniciando generación de reporte de recaudación por impuesto/ids: 2026-03-01 → 2026-03-31 → ids=[430]
+2026-04-20 12:50:48 | INFO | api | Reporte de recaudación por rubro/impuesto/ids generado: recaudacion_impuesto_emi_ids_2026-03-01_2026-03-31_430.json
+2026-04-20 12:50:48 | INFO | api | RecaudacionImpuestoFiltradoDatosAPIView - Archivo servido: recaudacion_impuesto_emi_ids_2026-03-01_2026-03-31_430.json (1 registros)
+2026-04-20 12:51:02 | INFO | api | RecaudacionRubroAnioEmiIdsApiView - Consulta iniciada: 2026-03-01 → 2026-03-31 → ids=[430]
+2026-04-20 12:51:02 | INFO | api | Iniciando generación de reporte de recaudación por impuesto/ids: 2026-03-01 → 2026-03-31 → ids=[430]
+2026-04-20 12:51:02 | INFO | api | Reporte de recaudación por rubro/impuesto/ids generado: recaudacion_impuesto_emi_ids_2026-03-01_2026-03-31_430.json
+2026-04-20 12:51:02 | INFO | api | RecaudacionImpuestoFiltradoDatosAPIView - Archivo servido: recaudacion_impuesto_emi_ids_2026-03-01_2026-03-31_430.json (1 registros)
