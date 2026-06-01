@@ -88,109 +88,101 @@ class BienesInmueblesSerializer(serializers.Serializer):
         try:
             with connection.cursor() as cursor:
                 query = """
-                -- =============================================
-                -- PREDIOS URBANOS
-                -- =============================================
-                SELECT
-                    CASE
-                        WHEN LENGTH(GEN01.gen01ruc) = 10 THEN 'C'
-                        WHEN LENGTH(GEN01.gen01ruc) = 13 THEN 'R'
-                        ELSE 'P'
-                    END                                                        AS TIP_IDENT,
-                    GEN01.gen01ruc                                             AS ID_IDENT,
-                    GEN01.gen01com                                             AS RAZ_SOC,
-                    DECODE(PUR01.pur01esta, 'TT', '02', '01')                 AS TIP_TRANS,
-                    'NINGUNO'                                                  AS OTRO_TIP_TRANS,
-                    PUR06.PUR06POR                                             AS POR_PROPIED,
-                    '01'                                                       AS TIP_BIEN,
-                    'NINGUNO'                                                  AS OTRO_TIP_BIEN,
-                    NVL(PUR01.PUR01PRED, '0')                                 AS NUM_PRED,
-                    NVL(PUR01.PUR01PRED, '0')                                 AS CLAV_CAT,
-                    TO_CHAR(NVL(PUR01.PUR01AVTTS, 0), 'FM999999999990.00')   AS AVAL_INM,
-                    TO_CHAR(NVL(PUR01.PURAVACONS, 0), 'FM999999999990.00')   AS AVAL_CONST,
-                    REPLACE(TO_CHAR(NVL(PUR01.PUR01ATTER, 0),
-                        'FM999999999990.00'), '0.00', '0.01')                 AS AR_TOTAL,
-                    REPLACE(TO_CHAR(NVL(PUR01.PUR01TAVRE, 0),
-                        'FM999999999990.00'), '0.00', '0.01')                 AS AVAL_TOTAL,
-                    '113'                                                      AS PROV,
-                    '11314'                                                    AS CANT,
-                    CASE
-                        WHEN (PUR01.PUR01PARRO) = 57 THEN '1131457'
-                        WHEN (PUR01.PUR01PARRO) = 53 THEN '1131453'
-                        WHEN (PUR01.PUR01PARRO) = 02 THEN '1131402'
-                        WHEN (PUR01.PUR01PARRO) = 01 THEN '1131401'
-                        ELSE '1131457'
-                    END                                                        AS PARR,
-                    CASE
-                        WHEN LENGTH(NVL(PUR01.PUR01DIR, 'Sucre')) < 5
-                            THEN 'sucre'
-                        ELSE NVL(PUR01.PUR01DIR, 'Sucre')
-                    END                                                        AS DIR
-                FROM GEN01
-                INNER JOIN PUR06 ON GEN01.GEN01CODI = PUR06.GEN01CODI
-                INNER JOIN PUR01 ON PUR01.PUR01PRED  = PUR06.PUR01PRED
-                WHERE PUR01.PUR01ESTA IN ('IG', 'MD', 'TT', 'CO')
-                  AND PUR06.PUR06POR  != 0
-                  AND GEN01.gen01ruc NOT LIKE '%ELI%'
+                SELECT 
+                        CASE
+                            WHEN UPPER(GEN01.gen01ruc) LIKE '%HEREDEROS%' THEN 'P'
+                            WHEN UPPER(GEN01.gen01ruc) LIKE '%SOCIEDAD%'  THEN 'P'
+                            WHEN UPPER(GEN01.gen01ruc) LIKE '%FALLECIDO%'  THEN 'P'
+                            WHEN LENGTH(GEN01.gen01ruc) = 10 THEN 'C'
+                            WHEN LENGTH(GEN01.gen01ruc) = 13 THEN 'R'
+                            ELSE 'P'
+                        END AS tipIdent, --TIPO DE IDENTIFICACION
+                        GEN01.gen01ruc idIdent, --NUMERO DE IDENTIFICACION
+                        GEN01.gen01com razSoc, --NOMBRE COMPLETO O RAZON SOCIAL
+                        decode(PUR01.pur01esta ,'TT','02','01') tipTrans, --TIPO DE TRANSACCION A REPORTAR
+                        'NINGUNO' otroTipTrans,
+                        PUR06.PUR06POR porPropiedad, --OTRO TIPO DE TRANSACCION A REPORTAR
+                        '01' tipBien, --TIPO DE BIEN INMUEBLE
+                        'NINGUNO' otroTipBien, --OTRO TIPO DE BIEN INMUEBLE 
+                        NVL (PUR01.PUR01PRED ,'0') numPred, --NUMERO DE PREDIO
+                        NVL (PUR01.PUR01PRED ,'0') clavCat, --CLAVE CATASTRAL
+                        TO_CHAR(NVL(PUR01.PUR01AVTTS, 0), 'FM999999999990.00') AS avalInm, ---AVALUO DEL TERRENO
+                        TO_CHAR(NVL(PUR01.PURAVACONS, 0), 'FM999999999990.00') AS avalConst, --AVALUO AREA DE CONSTRUCCION DEL BIEN INMUEBLE
+                        REPLACE(TO_CHAR(NVL(PUR01.PUR01ATTER,0), 'FM999999999990.00'),'0.00', '0.01') arTotal, --AREA TOTAL DEL BIEN INMUEBLE
+                        REPLACE(TO_CHAR(NVL(PUR01.PUR01TAVRE,0), 'FM999999999990.00'),'0.00', '0.01') avalTotal, -- AVALUO TOTAL DEL BIEN INMUEBLE,
+                        '113' AS provincia,
+                        '11314' AS canton,
+                        CASE
+                            WHEN (PUR01.PUR01PARRO) = 57 THEN '1131457'
+                            WHEN (PUR01.PUR01PARRO) = 53 THEN '1131453'
+                            WHEN (PUR01.PUR01PARRO) = 02 THEN '1131402'
+                            WHEN (PUR01.PUR01PARRO) = 01 THEN '1131401'
+                            ELSE '1131457'
+                            END AS parroquia,
+                        CASE 
+                            WHEN LENGTH(NVL(PUR01.PUR01DIR,'Sucre')) < 5 THEN 'sucre'
+                            ELSE NVL(PUR01.PUR01DIR,'Sucre')
+                        END AS direccion
+                    FROM GEN01 
+                    INNER JOIN PUR06 ON GEN01.GEN01CODI = PUR06.GEN01CODI
+                    INNER JOIN PUR01 ON PUR01.PUR01PRED = PUR06.PUR01PRED
+                    WHERE PUR01.PUR01ESTA IN ('IG','MD','TT','CO')
+                    AND PUR06.PUR06POR != 0
+                    AND GEN01.gen01ruc NOT LIKE '%ELI%'
+                    AND GEN01.gen01ruc NOT LIKE '%-1%'
+                    --AND PUR01.PUR01PRED = 1314010101046002
+                    UNION ALL
+                    SELECT 
+                    CASE   
+                            WHEN UPPER(GEN01.gen01ruc) LIKE '%HEREDEROS%' THEN 'P'
+                            WHEN UPPER(GEN01.gen01ruc) LIKE '%SOCIEDAD%'  THEN 'P'
+                            WHEN UPPER(GEN01.gen01ruc) LIKE '%FALLECIDO%'  THEN 'P'
+                            WHEN LENGTH(GEN01.gen01ruc) = 10 THEN 'C'
+                            WHEN LENGTH(GEN01.gen01ruc) = 13 THEN 'R'
+                            ELSE 'P'
+                        END AS tipIdent, --TIPO DE IDENTIFICACION 
+                        GEN01.gen01ruc idIdent, --NUMERO DE IDENTIFICACION
+                        GEN01.gen01com razSoc, --NOMBRE COMPLETO O RAZON SOCIAL
+                        decode(PRU01.PRU01ESTA ,'TT','02','01') tipTrans, --TIPO DE TRANSACCION A REPORTAR
+                        'NNGUNO' otroTipTrans, --OTRO TIPO DE TRANSACCION A REPORTAR
+                        PRU10.PRU10PORC proPropiedad, --PORCENTAJE DE PROPIEDAD
+                        '01' tipBien, --TIPO DE BIEN INMUEBLE
+                        'NINGUNO' otroTipBien, --OTRO TIPO DE BIEN INMUEBLE 
+                        NVL (PRU01.PRU01CLA ,'0') numPred, --NUMERO DE PREDIO
+                        NVL (PRU01.PRU01CLA ,'0') clavCat, --CLAVE CATASTRAL
+                        TO_CHAR(
+                            ABS(
+                                NVL(prU01.PRU01AVAL, 0) - 
+                                NVL((
+                                    SELECT pur05aREAL 
+                                    FROM pru05 pru 
+                                    WHERE prU01.PRU01CLA = pru.pru01cla 
+                                    AND rownum = 1
+                                ), 0)
+                            ), 
+                            'FM999999999990.00'
+                        ) avalInm, --AVALUO DEL TERRENO,
+                        TO_CHAR(NVL((select pur05aREAL from pru05 pru where PRU01.PRU01CLA=pru.pru01cla and rownum=1),0), 'FM999999999990.00') avalConst, --AVALUO AREA DE CONSTRUCCION DEL BIEN INMUEBLE
+                        REPLACE(TO_CHAR(NVL(PRU01.Pru01supe,0), 'FM999999999990.00'),'0.00', '0.01') arTotal, --AREA TOTAL DEL BIEN INMUEBLE
+                        REPLACE(TO_CHAR(NVL(PRU01.PRU01AVAL,0), 'FM999999999990.00'),'0.00', '0.01') avalTotal, -- AREA TOTAL DEL BIEN INMUEBLE,
+                        '113' AS provincia,
+                        '11314' AS canton,
+                        '1131401' AS parroquia,
+                        -- Reemplazo en dirección cuando tiene 5 caracteres
+                        CASE 
+                            WHEN LENGTH(NVL(PRU01.pru01npre,'Sucre')) < 5 THEN 'sucre'
+                            ELSE NVL(PRU01.pru01npre,'Sucre')
+                        END AS direccion
+                    FROM PRU01
+                    INNER JOIN PRU10
+                    ON PRU01.PRU01CLA = PRU10.PRU01CLA
+                    INNER JOIN GEN01
+                    ON PRU10.GEN01CODI = GEN01.GEN01CODI
+                    WHERE PRU01.PRU01ESTA NOT IN ('PE','DU')
+                    AND PRU10.PRU10PORC != 0
+                    AND GEN01.gen01ruc NOT LIKE '%ELI%'
+                    AND GEN01.gen01ruc NOT LIKE '%-1%'
 
-                -- =============================================
-                -- PREDIOS RURALES
-                -- =============================================
-                UNION ALL
-                SELECT
-                    CASE
-                        WHEN LENGTH(GEN01.gen01ruc) = 10 THEN 'C'
-                        WHEN LENGTH(GEN01.gen01ruc) = 13 THEN 'R'
-                        ELSE 'P'
-                    END                                                        AS TIP_IDENT,
-                    GEN01.gen01ruc                                             AS ID_IDENT,
-                    GEN01.gen01com                                             AS RAZ_SOC,
-                    DECODE(PRU01.PRU01ESTA, 'TT', '02', '01')                AS TIP_TRANS,
-                    'NINGUNO'                                                  AS OTRO_TIP_TRANS,
-                    PRU10.PRU10PORC                                            AS POR_PROPIED,
-                    '01'                                                       AS TIP_BIEN,
-                    'NINGUNO'                                                  AS OTRO_TIP_BIEN,
-                    NVL(PRU01.PRU01CLA, '0')                                  AS NUM_PRED,
-                    NVL(PRU01.PRU01CLA, '0')                                  AS CLAV_CAT,
-                    TO_CHAR(
-                        ABS(
-                            NVL(PRU01.PRU01AVAL, 0) -
-                            NVL((
-                                SELECT pur05aREAL
-                                FROM pru05 pru
-                                WHERE PRU01.PRU01CLA = pru.pru01cla
-                                AND rownum = 1
-                            ), 0)
-                        ),
-                        'FM999999999990.00'
-                    )                                                          AS AVAL_INM,
-                    TO_CHAR(
-                        NVL((
-                            SELECT pur05aREAL
-                            FROM pru05 pru
-                            WHERE PRU01.PRU01CLA = pru.pru01cla
-                            AND rownum = 1
-                        ), 0),
-                        'FM999999999990.00'
-                    )                                                          AS AVAL_CONST,
-                    REPLACE(TO_CHAR(NVL(PRU01.Pru01supe, 0),
-                        'FM999999999990.00'), '0.00', '0.01')                 AS AR_TOTAL,
-                    REPLACE(TO_CHAR(NVL(PRU01.PRU01AVAL, 0),
-                        'FM999999999990.00'), '0.00', '0.01')                 AS AVAL_TOTAL,
-                    '113'                                                      AS PROV,
-                    '11314'                                                    AS CANT,
-                    '1131401'                                                  AS PARR,
-                    CASE
-                        WHEN LENGTH(NVL(PRU01.pru01npre, 'Sucre')) < 5
-                            THEN 'sucre'
-                        ELSE NVL(PRU01.pru01npre, 'Sucre')
-                    END                                                        AS DIR
-                FROM PRU01
-                INNER JOIN PRU10 ON PRU01.PRU01CLA  = PRU10.PRU01CLA
-                INNER JOIN GEN01 ON PRU10.GEN01CODI = GEN01.GEN01CODI
-                WHERE PRU01.PRU01ESTA NOT IN ('PE', 'DU')
-                  AND PRU10.PRU10PORC != 0
-                  AND GEN01.gen01ruc NOT LIKE '%ELI%'
                 """
 
                 cursor.execute(query)
